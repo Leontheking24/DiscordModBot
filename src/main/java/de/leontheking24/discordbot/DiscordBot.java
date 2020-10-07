@@ -129,4 +129,5 @@ public class DiscordBot {
         jda.addEventListener(new CheckBlacklist());
     }
 
+    //embedBuilder.setAuthor(bot.getName(), bot.getEffectiveAvatarUrl(), bot.getEffectiveAvatarUrl());
 }
