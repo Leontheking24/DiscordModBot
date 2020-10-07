@@ -1,0 +1,109 @@
+package de.leontheking24.discordbot.Commands.Base;
+
+import de.leontheking24.discordbot.Database.SQLManager;
+import de.leontheking24.discordbot.ServerManager;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+
+public class Command implements ICommandExecute {
+
+    private final ServerManager serverManager;
+    private final SQLManager sqlManager;
+    private final String trigger;
+    private String value;
+    private final String description;
+    private String permission;
+    private final CommandType commandType;
+
+    public Command(ServerManager serverManager, String trigger, String value, String description, String permission, CommandType commandType) {
+        this.serverManager = serverManager;
+        sqlManager = serverManager.getSqlManager();
+        this.trigger = trigger;
+        this.value = value;
+        this.description = description;
+        this.permission = permission;
+        this.commandType = commandType;
+    }
+
+    public Command(ServerManager serverManager, String trigger, String description, String permission, CommandType commandType) {
+        this.serverManager = serverManager;
+        sqlManager = serverManager.getSqlManager();
+        this.trigger = trigger;
+        this.description = description;
+        this.permission = permission;
+        this.commandType = commandType;
+    }
+
+    public Command(ServerManager serverManager, String trigger, String description, CommandType commandType) {
+        this.serverManager = serverManager;
+        sqlManager = serverManager.getSqlManager();
+        this.trigger = trigger;
+        this.description = description;
+        this.commandType = commandType;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public boolean hasValue() {
+        return value != null;
+    }
+
+    public boolean hasPermission() {
+        return permission != null;
+    }
+
+    public String getTrigger() {
+        return trigger;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public CommandType getCommandType() {
+        return commandType;
+    }
+
+    @Override
+    public void executeCommand(TextChannel channel, Message message) {
+        String messageContext = value;
+        if(value.contains("{Counter}")) {
+            sqlManager.countUp(trigger);
+            messageContext = messageContext.replace("{Counter}", String.valueOf(sqlManager.getCounter(trigger)));
+        }
+        if(value.contains("{Name}")) {
+            String replacedPlayer = message.getMember().getEffectiveName();
+            if(message.getMentionedMembers().size() > 0) {
+                replacedPlayer = message.getMentionedMembers().get(0).getEffectiveName();
+            }
+            messageContext = messageContext.replace("{Name}", replacedPlayer);
+        }
+        channel.sendMessage(messageContext).queue();
+    }
+
+    @Override
+    public boolean isArgumentLengthZero(Message message) {
+        String messageWOPrefix = message.getContentRaw().substring(serverManager.getBotCommandPrefix().length() + trigger.length());
+        return messageWOPrefix.length() == 0;
+    }
+
+    @Override
+    public String[] getArguments(Message message) {
+        return message.getContentRaw().substring(serverManager.getBotCommandPrefix().length() + trigger.length() +1).split(" ");
+    }
+
+}
