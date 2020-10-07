@@ -161,7 +161,7 @@ public class PollCommand extends Command {
 
         if(utils.isStringAMessageId(args[triggerSlot+1])) {
             replaceString = args[triggerSlot] + " " + args[triggerSlot+1];
-            returnId = Long.valueOf(args[triggerSlot+1]);
+            returnId = Long.parseLong(args[triggerSlot+1]);
         }
         return new PollMessageSearch(returnId, replaceString);
     }

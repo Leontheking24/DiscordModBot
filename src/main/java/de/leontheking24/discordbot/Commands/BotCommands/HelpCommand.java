@@ -26,6 +26,7 @@ public class HelpCommand extends Command {
         info.addField(serverManager.getMessage("help_command_title"), serverManager.getMessage("help_command_body"), false);
         info.addField(serverManager.getMessage("help_config_title"), serverManager.getMessage("help_config_body"), false);
         info.addField(serverManager.getMessage("help_help_title"), serverManager.getMessage("help_help_body"), false);
+        info.addField("➤ " + serverManager.getMessage("help_add_title"), serverManager.getMessage("help_add_body"), false);
         info.addField(serverManager.getMessage("help_author_title"), serverManager.getMessage("help_author_body"), true);
         info.addField(serverManager.getMessage("help_version"), DiscordBot.version,  true);
 

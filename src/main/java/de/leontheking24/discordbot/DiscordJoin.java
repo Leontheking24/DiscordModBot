@@ -4,6 +4,8 @@ import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.logging.Level;
+
 public class DiscordJoin extends ListenerAdapter {
 
     @Override
@@ -14,5 +16,6 @@ public class DiscordJoin extends ListenerAdapter {
 
         ServerManager serverManager = DiscordBot.getServerLists().getServerManager(id);
         serverManager.getPermissionManager().playerAddPermission(ownerId, "*");
+        DiscordBot.getLogger().log(Level.INFO, "A new Server added the bot! Id: " + id);
     }
 }
