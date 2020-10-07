@@ -16,6 +16,7 @@ public class DiscordJoin extends ListenerAdapter {
 
         ServerManager serverManager = DiscordBot.getServerLists().getServerManager(id);
         serverManager.getPermissionManager().playerAddPermission(ownerId, "*");
+        serverManager.getConfigManager().updateConfig("notificationChannel", serverManager.getGuild().getDefaultChannel().getId());
         DiscordBot.getLogger().log(Level.INFO, "A new Server added the bot! Id: " + id);
     }
 }
