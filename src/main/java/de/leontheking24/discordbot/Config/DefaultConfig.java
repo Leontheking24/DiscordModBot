@@ -16,9 +16,6 @@ public class DefaultConfig {
     public static boolean enablePollCommand=true;
     public static boolean enableReactRoleCommand=true;
 
-    //Permission Config
-    public static long unpermittableGroup=123456789876543212l;
-
     //Moderation-Config
     public static boolean enableCapsProtection=true;
     public static boolean enableBlacklist=true;

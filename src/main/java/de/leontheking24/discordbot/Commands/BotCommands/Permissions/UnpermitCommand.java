@@ -79,9 +79,7 @@ public class UnpermitCommand extends Command {
                         }
                     }
                     return;
-
                 }
-
             }
         }
         channel.sendMessage(utils.createEmbed(serverManager.getMessage("unpermit_syntax_title"), Color.RED, serverManager.getMessage("unpermit_syntax_body").
@@ -89,20 +87,10 @@ public class UnpermitCommand extends Command {
     }
 
     public boolean isRemoveablePlayer(Member member) {
-        if(!serverManager.getConfigManager().getConfig("unpermittableGroup").equals("0")) {
-            for(Role role : member.getRoles()) {
-                if(role.getIdLong() == Long.parseLong(serverManager.getConfigManager().getConfig("unpermittableGroup"))) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return serverManager.getPermissionManager().playerHasPermission(member.getIdLong(), "unpermittable");
     }
 
     public boolean isRemoveableGroup(Role role) {
-        if(!serverManager.getConfigManager().getConfig("unpermittableGroup").equals("0")) {
-            return role.getIdLong() != Long.parseLong(serverManager.getConfigManager().getConfig("unpermittableGroup"));
-        }
-        return true;
+        return serverManager.getPermissionManager().groupHasPermission(role.getIdLong(), "unpermittable");
     }
 }
