@@ -25,6 +25,7 @@ public class MuteManager {
     public MuteManager(ServerManager serverManager) {
         this.serverManager = serverManager;
         this.muteList = new HashMap<>();
+        serverManager.getMySql().execute("CREATE TABLE IF NOT EXISTS MutedPlayers (playerId bigint PRIMARY KEY NOT NULL, muteEnd datetime NOT NULL, reason VARCHAR(200))");
         initMutes();
     }
 

@@ -24,17 +24,16 @@ public class SpamSecure extends ListenerAdapter {
 
     private ServerManager serverManager;
     private SpamManager spamManager;
-    private BlacklistManager blacklistManager;
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         serverManager = DiscordBot.getServerManager(event.getGuild().getIdLong());
+        spamManager = serverManager.getSpamManager();
+
         if(Boolean.parseBoolean(serverManager.getConfigManager().getConfig("enableSpamProtection"))) {
             Member member = event.getMember();
-            if(serverManager.getPermissionManager().playerHasPermission(member.getIdLong(), "events.spam.ignore"))
+            if(!serverManager.getPermissionManager().playerHasPermission(member.getIdLong(), "events.spam.ignore"))
 
-            spamManager = serverManager.getSpamManager();
-            blacklistManager = serverManager.getModManager();
             if(!member.getUser().isBot()) {
                 if(spamManager.isMemberDetective(member)) {
                     try {

@@ -26,6 +26,7 @@ public class ConfigManager {
     }
 
     public boolean areSettingsSet() {
+        serverManager.getMySql().execute("CREATE TABLE IF NOT EXISTS Config (configKey VARCHAR(100) PRIMARY KEY NOT NULL, configValue VARCHAR(100) NOT NULL, configDataTypeClass VARCHAR(100) NOT NULL)");
         ResultSet resultSet = serverManager.getMySql().executeWithResult("SELECT EXISTS (SELECT * FROM Config LIMIT 1) AS isConfigExists");
         return utils.isResultTrue(resultSet, "isConfigExists");
     }

@@ -9,7 +9,7 @@ import de.leontheking24.discordbot.Config.ConfigManager;
 import de.leontheking24.discordbot.Config.FileGenerator;
 import de.leontheking24.discordbot.Database.Config.DatabaseConfig;
 import de.leontheking24.discordbot.Database.Config.DatabaseDefaultConfig;
-import de.leontheking24.discordbot.Database.SqlManagerNew;
+import de.leontheking24.discordbot.Database.SqlManager;
 import de.leontheking24.discordbot.Moderation.Commands.*;
 import de.leontheking24.discordbot.Moderation.Manager.MuteManager;
 import de.leontheking24.discordbot.Permissions.PermissionManager;
@@ -78,7 +78,7 @@ public class ServerManager {
     }
 
     private void loadCurrentDatabase() {
-        new SqlManagerNew(DiscordBot.getDatabaseGlobalConfig()).initConfig(this);
+        new SqlManager(DiscordBot.getDatabaseGlobalConfig()).initConfig(this);
         mySql = new MySql(databaseConfig);
         commandSqlManager = new CommandSqlManager(this);
         if(!configManager.areSettingsSet()) {
@@ -95,7 +95,7 @@ public class ServerManager {
         if(Boolean.parseBoolean(configManager.getConfig("isUsingOwnDatabase"))) {
             if(configManager.isDatabaseConfigUsable()) {
                 databaseConfig = configManager.getUserDatabaseConfig();
-                new SqlManagerNew(DiscordBot.getDatabaseGlobalConfig()).updateServerConfig(serverId, databaseConfig);
+                new SqlManager(DiscordBot.getDatabaseGlobalConfig()).updateServerConfig(serverId, databaseConfig);
                 mySql = new MySql(databaseConfig);
                 commandSqlManager = new CommandSqlManager(this);
                 configManager.initAllConfigs();
@@ -107,7 +107,7 @@ public class ServerManager {
         } else {
             if(!configManager.isDatabaseConfigDefault()) {
                 databaseConfig = new DatabaseDefaultConfig(serverId);
-                new SqlManagerNew(DiscordBot.getDatabaseGlobalConfig()).updateServerConfig(serverId, databaseConfig);
+                new SqlManager(DiscordBot.getDatabaseGlobalConfig()).updateServerConfig(serverId, databaseConfig);
                 mySql = new MySql(databaseConfig);
                 commandSqlManager = new CommandSqlManager(this);
                 configManager.initAllConfigs();

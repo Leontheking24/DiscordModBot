@@ -3,8 +3,6 @@ package de.leontheking24.discordbot.Moderation.Manager;
 import de.leontheking24.discordbot.DiscordBot;
 import de.leontheking24.discordbot.ServerManager;
 import de.leontheking24.discordbot.Utils.Utils;
-import net.dv8tion.jda.api.entities.TextChannel;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,8 +17,8 @@ public class BlacklistManager {
     public BlacklistManager(ServerManager serverManager) {
         this.blacklist = new ArrayList<>();
         this.serverManager = serverManager;
+        serverManager.getMySql().execute("CREATE TABLE IF NOT EXISTS BlackListedWords(value VARCHAR(100) NOT NULL PRIMARY KEY)");
         initBlacklist();
-
     }
 
     public List<String> getBlackList() {

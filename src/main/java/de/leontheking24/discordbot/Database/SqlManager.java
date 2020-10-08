@@ -8,13 +8,13 @@ import de.leontheking24.discordbot.Utils.Utils;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SqlManagerNew {
+public class SqlManager {
 
     private MySql mySql;
     private DatabaseConfig config;
     private Utils utils = DiscordBot.getUtils();
 
-    public SqlManagerNew(DatabaseConfig config) {
+    public SqlManager(DatabaseConfig config) {
         this.config = config;
         mySql = new MySql(config);
     }
