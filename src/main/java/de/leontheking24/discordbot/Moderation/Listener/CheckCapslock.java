@@ -7,8 +7,6 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-import java.util.logging.Level;
-
 public class CheckCapslock extends ListenerAdapter {
 
     private final Utils utils = DiscordBot.getUtils();
@@ -26,7 +24,6 @@ public class CheckCapslock extends ListenerAdapter {
                         try {
                             event.getMessage().delete().queue();
                         } catch (Exception e) {
-                            DiscordBot.getLogger().log(Level.INFO, "Message couldn't delete");
                         }
                         author.getUser().openPrivateChannel().queue(privateChannel -> {
                             privateChannel.sendMessage(serverManager.getMessage("capslock_user")).queue();

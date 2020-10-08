@@ -2,7 +2,6 @@ package de.leontheking24.discordbot.Moderation.Listener;
 
 import de.leontheking24.discordbot.ServerManager;
 import de.leontheking24.discordbot.DiscordBot;
-import de.leontheking24.discordbot.Moderation.Manager.BlacklistManager;
 import de.leontheking24.discordbot.Moderation.Manager.SpamManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
@@ -18,7 +17,6 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.logging.Level;
 
 public class SpamSecure extends ListenerAdapter {
 
@@ -42,7 +40,6 @@ public class SpamSecure extends ListenerAdapter {
                         spamManager.updateMessageAmount(member, spamManager.getMessageAmount(member)+1);
                         updateSpamMessage(member, event.getChannel(), event.getMessage().getContentRaw(), spamManager.getMessageAmount(member));
                     } catch (Exception e) {
-                        DiscordBot.getLogger().log(Level.INFO, "Message couldn't delete");
                     }
 
                 } else {

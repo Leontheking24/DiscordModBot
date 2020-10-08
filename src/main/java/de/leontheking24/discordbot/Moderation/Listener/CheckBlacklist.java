@@ -14,7 +14,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.awt.*;
 import java.text.DateFormat;
 import java.util.GregorianCalendar;
-import java.util.logging.Level;
 
 public class CheckBlacklist extends ListenerAdapter {
 
@@ -29,7 +28,10 @@ public class CheckBlacklist extends ListenerAdapter {
             Message message = event.getMessage();
 
             if(serverManager.getMuteManager().isPlayerMuted(author.getIdLong())) {
-                message.delete().queue();
+                try {
+                    message.delete().queue();
+                } catch (Exception e) {
+                }
 
             } else {
                 BlacklistManager blacklistManager = serverManager.getModManager();
@@ -56,7 +58,6 @@ public class CheckBlacklist extends ListenerAdapter {
                                             try {
                                                 message.delete().queue();
                                             } catch (Exception e) {
-                                                DiscordBot.getLogger().log(Level.INFO, "Message couldn't delete");
                                             }
                                             hasBadWord = true;
                                         }
