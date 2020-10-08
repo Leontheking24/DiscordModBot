@@ -15,10 +15,10 @@ import java.util.List;
 
 public class BlacklistCommand extends Command {
 
-    private ServerManager serverManager;
-    private static String trigger = "blacklist";
-    private BlacklistManager blacklistManager;
-    private Utils utils = DiscordBot.getUtils();
+    private final ServerManager serverManager;
+    private final static String trigger = "blacklist";
+    private final BlacklistManager blacklistManager;
+    private final Utils utils = DiscordBot.getUtils();
 
     public BlacklistCommand(ServerManager serverManager) {
         super(serverManager, trigger, serverManager.getMessage("blacklist_description"), "command.blacklist", CommandType.Bot);
@@ -52,9 +52,8 @@ public class BlacklistCommand extends Command {
         info.setTitle(serverManager.getMessage("blacklist_help_title"));
         info.setDescription(serverManager.getMessage("blacklist_help_description"));
         info.addField(serverManager.getMessage("blacklist_help_show"), "> " + serverManager.getBotCommandPrefix() + trigger + " show", false);
-        info.addField(serverManager.getMessage("blacklist_help_add_title"), serverManager.getMessage("blacklist_help_add_body").replace("{prefix}", serverManager.getBotCommandPrefix().replace("{trigger}", trigger)), false);
-        info.addField(serverManager.getMessage("blacklist_help_remove_title"), serverManager.getMessage("blacklist_help_remove_body").replace("{prefix}", serverManager.getBotCommandPrefix().replace("{trigger}", trigger)), false);
-
+        info.addField(serverManager.getMessage("blacklist_help_add_title"), serverManager.getMessage("blacklist_help_add_body").replace("{prefix}", serverManager.getBotCommandPrefix()).replace("{trigger}", trigger), false);
+        info.addField(serverManager.getMessage("blacklist_help_remove_title"), serverManager.getMessage("blacklist_help_remove_body").replace("{prefix}", serverManager.getBotCommandPrefix()).replace("{trigger}", trigger), false);
         return info;
     }
 

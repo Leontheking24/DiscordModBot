@@ -116,7 +116,7 @@ public class PermissionManager {
         return playerPermissionCheck(playerId, "*");
     }
 
-    private boolean playerPermissionCheck(long playerId, String permission) {
+    public boolean playerPermissionCheck(long playerId, String permission) {
         ResultSet resultSet = mySql.executeWithResult("SELECT EXISTS(SELECT 1 FROM PlayerPermissions WHERE playerId='" + playerId + "' AND permission='" + permission.toLowerCase() + "' LIMIT 1) " +
                 "AS PlayerHasPermission");
         return utils.isResultTrue(resultSet, "PlayerHasPermission");
@@ -140,7 +140,7 @@ public class PermissionManager {
         return groupPermissionCheck(groupId, "*");
     }
 
-    private boolean groupPermissionCheck(long groupId, String permission) {
+    public boolean groupPermissionCheck(long groupId, String permission) {
         ResultSet resultSet = mySql.executeWithResult("SELECT EXISTS(SELECT 1 FROM GroupPermissions WHERE groupId='" + groupId + "' AND permission='" + permission.toLowerCase() + "' LIMIT 1) " +
                 "AS GroupHasPermission");
         return utils.isResultTrue(resultSet, "GroupHasPermission");

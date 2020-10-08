@@ -23,10 +23,6 @@ public class BlacklistManager {
 
     }
 
-    public TextChannel getChannel() {
-        return DiscordBot.getJda().getTextChannelById(serverManager.getConfigManager().getConfig("notificationChannel"));
-    }
-
     public List<String> getBlackList() {
         return blacklist;
     }

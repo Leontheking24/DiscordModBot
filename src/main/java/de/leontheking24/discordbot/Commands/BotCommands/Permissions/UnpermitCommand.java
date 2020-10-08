@@ -38,7 +38,7 @@ public class UnpermitCommand extends Command {
                             String permissionSet = "";
                             for(String arg : args) {
                                 if(!(arg.startsWith("<@") && arg.endsWith(">"))) {
-                                    if(serverManager.getPermissionManager().playerHasPermission(member.getIdLong(), arg)) {
+                                    if(serverManager.getPermissionManager().playerPermissionCheck(member.getIdLong(), arg)) {
                                         serverManager.getPermissionManager().playerRemovePermission(member.getIdLong(), arg);
                                         permissionSet += arg + ", ";
                                     }
@@ -61,7 +61,7 @@ public class UnpermitCommand extends Command {
                             String permissionSet = "";
                             for(String arg : args) {
                                 if(!(arg.startsWith("<@") && arg.endsWith(">"))) {
-                                    if(serverManager.getPermissionManager().groupHasPermission(role.getIdLong(), arg)) {
+                                    if(serverManager.getPermissionManager().groupPermissionCheck(role.getIdLong(), arg)) {
                                         serverManager.getPermissionManager().groupRemovePermission(role.getIdLong(), arg);
                                         permissionSet += arg + ", ";
                                     }
@@ -87,10 +87,10 @@ public class UnpermitCommand extends Command {
     }
 
     public boolean isRemoveablePlayer(Member member) {
-        return serverManager.getPermissionManager().playerHasPermission(member.getIdLong(), "unpermittable");
+        return !serverManager.getPermissionManager().playerHasPermission(member.getIdLong(), "unpermittable");
     }
 
     public boolean isRemoveableGroup(Role role) {
-        return serverManager.getPermissionManager().groupHasPermission(role.getIdLong(), "unpermittable");
+        return !serverManager.getPermissionManager().groupHasPermission(role.getIdLong(), "unpermittable");
     }
 }

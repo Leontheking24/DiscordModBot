@@ -84,14 +84,13 @@ public class MuteManager {
     }
 
     public void muteMessage(Member player, Date endDate, String reason) {
-        TextChannel channel = DiscordBot.getJda().getTextChannelById(serverManager.getConfigManager().getConfig("notificationChannel"));
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle(serverManager.getMessage("mute_message_title")).setColor(Color.RED);
         embed.addField(serverManager.getMessage("mute_message_player"), player.getAsMention(), true);
         embed.addField(serverManager.getMessage("mute_message_date"), dateMessage.format(endDate) + " Uhr", true);
         embed.addField(serverManager.getMessage("mute_message_reason"), reason, false);
 
-        channel.sendMessage(embed.build()).queue();
+        serverManager.getNotificationChannel().sendMessage(embed.build()).queue();
         player.getUser().openPrivateChannel().queue(privateChannel -> {
             embed.setDescription(serverManager.getMessage("mute_playermessage").replace("{Server}", serverManager.getGuild().getName()));
             privateChannel.sendMessage(embed.build()).queue();

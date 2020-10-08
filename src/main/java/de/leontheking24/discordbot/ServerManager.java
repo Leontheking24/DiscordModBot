@@ -23,6 +23,7 @@ import de.leontheking24.discordbot.Poll.PollCommand;
 import de.leontheking24.discordbot.Poll.PollManager;
 import de.leontheking24.discordbot.Poll.PollSqlManager;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -264,5 +265,13 @@ public class ServerManager {
 
     public String getMessage(String messageKey) {
         return DiscordBot.getLanguageManager().getMessage(messageKey, languageKey);
+    }
+
+    public TextChannel getNotificationChannel() {
+        TextChannel channel = DiscordBot.getJda().getTextChannelById(configManager.getConfig("notificationChannel"));
+        if(channel != null) {
+            return channel;
+        }
+        return getGuild().getDefaultChannel();
     }
 }

@@ -53,6 +53,7 @@ public class ListCommand extends Command {
         List<Command> commandList = commandManager.getCommandListTypSorted();
 
         EmbedBuilder help = new EmbedBuilder();
+        help.setAuthor(DiscordBot.getBot().getName(), DiscordBot.getBot().getEffectiveAvatarUrl(), DiscordBot.getBot().getEffectiveAvatarUrl());
         help.setTitle(serverManager.getMessage("list_help_title"));
         if(serverManager.getBotCommandPrefix().equals(serverManager.getUserCommandPrefix())) {
             help.setDescription(serverManager.getMessage("list_help_body_single").replace("{prefix}", serverManager.getBotCommandPrefix()));

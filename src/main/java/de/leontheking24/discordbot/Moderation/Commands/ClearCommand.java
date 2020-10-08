@@ -132,7 +132,7 @@ public class ClearCommand extends Command {
     }
 
     public void deleteMessage(int messageAmount, String deletedMember, String deletedChannel) {
-        serverManager.getModManager().getChannel().sendMessage(new EmbedBuilder().setColor(Color.RED)
+        serverManager.getNotificationChannel().sendMessage(new EmbedBuilder().setColor(Color.RED)
                 .setTitle(serverManager.getMessage("clear_message_title"))
                 .setDescription(serverManager.getMessage("clear_message_description"))
                 .addField(serverManager.getMessage("clear_message_user"), deletedMember, true)

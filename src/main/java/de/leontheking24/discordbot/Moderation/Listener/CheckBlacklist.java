@@ -44,7 +44,7 @@ public class CheckBlacklist extends ListenerAdapter {
                                     if(!hasBadWord) {
                                         Likeness likeness = utils.stringLikeness(serverManager, partList, part);
                                         if(likeness.isLikeness()) {
-                                            blacklistManager.getChannel().sendMessage(new EmbedBuilder().setTitle(serverManager.getMessage("blacklist_message_title")).setColor(Color.RED)
+                                            serverManager.getNotificationChannel().sendMessage(new EmbedBuilder().setTitle(serverManager.getMessage("blacklist_message_title")).setColor(Color.RED)
                                                     .addField(serverManager.getMessage("blacklist_message_user"), author.getAsMention(), true)
                                                     .addField(serverManager.getMessage("blacklist_message_channel"), "<#" + message.getChannel().getId() + ">", true)
                                                     .addField(serverManager.getMessage("blacklist_message_time"),  DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(new GregorianCalendar().getTime()), true)
@@ -69,5 +69,4 @@ public class CheckBlacklist extends ListenerAdapter {
             }
         }
     }
-
 }

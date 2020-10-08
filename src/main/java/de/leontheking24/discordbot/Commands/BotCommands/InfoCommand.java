@@ -32,7 +32,7 @@ public class InfoCommand extends Command {
                     String permission = serverManager.getMessage("info_no_permission_needed");
 
                     info.setTitle(serverManager.getMessage("info_message_title")).setColor(Color.GREEN);
-                    info.setDescription(serverManager.getMessage("info_message_description"));
+                    info.setDescription(serverManager.getMessage("info_message_description").replace("{Command}", command.getTrigger()));
                     info.addField(serverManager.getMessage("info_message_cmd_trigger"), command.getTrigger(), true);
                     info.addField(serverManager.getMessage("info_message_cmd_description"), command.getDescription(), true);
                     if(command.hasValue()) {

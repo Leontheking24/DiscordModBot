@@ -14,6 +14,9 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.SelfUser;
+import net.dv8tion.jda.api.entities.TextChannel;
+
 import javax.security.auth.login.LoginException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,6 +27,7 @@ public class DiscordBot {
 
     public static JDA jda;
     public static String version = "1.0.0";
+    public static SelfUser bot;
 
     private static Logger logger;
     private static ServerLists serverLists;
@@ -42,6 +46,7 @@ public class DiscordBot {
         String token = "NzUwMzcxOTMzMDMxMjM1NzQ2.X05kUg.RcH5hJiT7BaiJAk1eXy7akP276A";
         jda = new JDABuilder(AccountType.BOT).setToken(token).build();
         jda.addEventListener(new DiscordJoin());
+        bot = jda.getSelfUser();
         logger = Logger.getLogger("DiscordBot");
         databaseGlobalConfig = new DatabaseGlobalConfig();
         languageManager = new LanguageManager();
@@ -127,6 +132,10 @@ public class DiscordBot {
         jda.addEventListener(new PollEventListener());
         jda.addEventListener(new SpamSecure());
         jda.addEventListener(new CheckBlacklist());
+    }
+
+    public static SelfUser getBot() {
+        return bot;
     }
 
     //embedBuilder.setAuthor(bot.getName(), bot.getEffectiveAvatarUrl(), bot.getEffectiveAvatarUrl());

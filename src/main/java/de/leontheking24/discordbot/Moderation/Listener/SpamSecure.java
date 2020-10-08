@@ -30,9 +30,11 @@ public class SpamSecure extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         serverManager = DiscordBot.getServerManager(event.getGuild().getIdLong());
         if(Boolean.parseBoolean(serverManager.getConfigManager().getConfig("enableSpamProtection"))) {
+            Member member = event.getMember();
+            if(serverManager.getPermissionManager().playerHasPermission(member.getIdLong(), "events.spam.ignore"))
+
             spamManager = serverManager.getSpamManager();
             blacklistManager = serverManager.getModManager();
-            Member member = event.getMember();
             if(!member.getUser().isBot()) {
                 if(spamManager.isMemberDetective(member)) {
                     try {
@@ -41,6 +43,7 @@ public class SpamSecure extends ListenerAdapter {
                         spamManager.updateMessageAmount(member, spamManager.getMessageAmount(member)+1);
                         updateSpamMessage(member, event.getChannel(), event.getMessage().getContentRaw(), spamManager.getMessageAmount(member));
                     } catch (Exception e) {
+                        DiscordBot.getLogger().log(Level.INFO, "Message couldn't delete");
                     }
 
                 } else {
@@ -53,7 +56,7 @@ public class SpamSecure extends ListenerAdapter {
                             } catch (Exception e) {
                             }
                         }
-                        blacklistManager.getChannel().sendMessage(SpamMessage(member, event.getChannel(), deleteMessage.get(deleteMessage.size()-1).getContentRaw(),
+                        serverManager.getNotificationChannel().sendMessage(SpamMessage(member, event.getChannel(), deleteMessage.get(deleteMessage.size()-1).getContentRaw(),
                                 deleteMessage.size()).build()).queue(message -> spamManager.addDetectiveMember(member, deleteMessage.size(), message.getIdLong()));
                     }
                 }
@@ -87,7 +90,7 @@ public class SpamSecure extends ListenerAdapter {
     }
 
     public void updateSpamMessage(Member author, TextChannel channel, String lastMessage, int amount) {
-        blacklistManager.getChannel().retrieveMessageById(spamManager.getAnnouncmentId(author)).complete().editMessage(
+        serverManager.getNotificationChannel().retrieveMessageById(spamManager.getAnnouncmentId(author)).complete().editMessage(
                 SpamMessage(author, channel, lastMessage, amount).build()).queue();
 
     }
