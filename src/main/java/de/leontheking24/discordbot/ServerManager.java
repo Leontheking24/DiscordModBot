@@ -1,5 +1,6 @@
 package de.leontheking24.discordbot;
 
+import de.leontheking24.discordbot.Commands.Base.CommandSqlManager;
 import de.leontheking24.discordbot.Commands.BotCommands.*;
 import de.leontheking24.discordbot.Commands.BotCommands.Permissions.UnpermitCommand;
 import de.leontheking24.discordbot.Commands.BotCommands.Permissions.UserInfoCommand;
@@ -16,7 +17,6 @@ import de.leontheking24.discordbot.Commands.Base.CommandManager;
 import de.leontheking24.discordbot.Commands.BotCommands.Permissions.PermitCommand;
 import de.leontheking24.discordbot.Commands.BotCommands.RoleAssignment.ReactRoleCommand;
 import de.leontheking24.discordbot.Database.MySql;
-import de.leontheking24.discordbot.Database.SQLManager;
 import de.leontheking24.discordbot.Moderation.Manager.BlacklistManager;
 import de.leontheking24.discordbot.Moderation.Manager.SpamManager;
 import de.leontheking24.discordbot.Poll.PollCommand;
@@ -35,7 +35,7 @@ public class ServerManager {
     private String languageKey = "en";
 
     private MySql mySql;
-    private SQLManager sqlManager;
+    private CommandSqlManager commandSqlManager;
     private ConfigManager configManager;
     private PermissionManager permissionManager;
     private CommandManager commandManager;
@@ -80,13 +80,13 @@ public class ServerManager {
     private void loadCurrentDatabase() {
         new SqlManagerNew(DiscordBot.getDatabaseGlobalConfig()).initConfig(this);
         mySql = new MySql(databaseConfig);
-        sqlManager = new SQLManager(this);
+        commandSqlManager = new CommandSqlManager(this);
         if(!configManager.areSettingsSet()) {
             configManager.initDefaultConfig();
         }
-        sqlManager.loadConfig();
+        configManager.loadConfig();
         if(Boolean.parseBoolean(configManager.getConfig("enableUserCommands"))) {
-            sqlManager.insertCommands();
+            commandSqlManager.insertCommands();
         }
     }
 
@@ -97,7 +97,7 @@ public class ServerManager {
                 databaseConfig = configManager.getUserDatabaseConfig();
                 new SqlManagerNew(DiscordBot.getDatabaseGlobalConfig()).updateServerConfig(serverId, databaseConfig);
                 mySql = new MySql(databaseConfig);
-                sqlManager = new SQLManager(this);
+                commandSqlManager = new CommandSqlManager(this);
                 configManager.initAllConfigs();
                 transferDatabaseData(oldConfig);
             }
@@ -109,7 +109,7 @@ public class ServerManager {
                 databaseConfig = new DatabaseDefaultConfig(serverId);
                 new SqlManagerNew(DiscordBot.getDatabaseGlobalConfig()).updateServerConfig(serverId, databaseConfig);
                 mySql = new MySql(databaseConfig);
-                sqlManager = new SQLManager(this);
+                commandSqlManager = new CommandSqlManager(this);
                 configManager.initAllConfigs();
                 transferDatabaseData(oldConfig);
             }
@@ -193,8 +193,8 @@ public class ServerManager {
         return mySql;
     }
 
-    public SQLManager getSqlManager() {
-        return sqlManager;
+    public CommandSqlManager getCommandSqlManager() {
+        return commandSqlManager;
     }
 
     public ConfigManager getConfigManager() {

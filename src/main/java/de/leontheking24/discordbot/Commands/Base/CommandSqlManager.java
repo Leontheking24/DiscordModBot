@@ -1,10 +1,8 @@
-package de.leontheking24.discordbot.Database;
+package de.leontheking24.discordbot.Commands.Base;
 
-import de.leontheking24.discordbot.Commands.Base.Command;
-import de.leontheking24.discordbot.Commands.Base.CommandType;
-import de.leontheking24.discordbot.ServerManager;
-import de.leontheking24.discordbot.Commands.Base.CommandManager;
+import de.leontheking24.discordbot.Database.MySql;
 import de.leontheking24.discordbot.DiscordBot;
+import de.leontheking24.discordbot.ServerManager;
 import de.leontheking24.discordbot.Utils.Utils;
 
 import java.sql.ResultSet;
@@ -13,21 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-public class SQLManager {
+public class CommandSqlManager {
 
-    private ServerManager serverManager;
-    private MySql mySql;
-    private Utils utils = DiscordBot.getUtils();
+    private final ServerManager serverManager;
+    private final MySql mySql;
+    private final Utils utils = DiscordBot.getUtils();
 
-    public SQLManager(ServerManager serverManager) {
+    public CommandSqlManager(ServerManager serverManager) {
         this.serverManager = serverManager;
-        mySql = serverManager.getMySql();
-
+        this.mySql = serverManager.getMySql();
         mySql.execute("CREATE TABLE IF NOT EXISTS Commands(trigger_word VARCHAR(100) NOT NULL PRIMARY KEY, value VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, permission VARCHAR(50), type VARCHAR(30) NOT NULL)");
         mySql.execute("CREATE TABLE IF NOT EXISTS Counter(name VARCHAR(100) NOT NULL PRIMARY KEY, value INTEGER)");
-        mySql.execute("CREATE TABLE IF NOT EXISTS BlackListedWords(value VARCHAR(100) NOT NULL PRIMARY KEY)");
-        mySql.execute("CREATE TABLE IF NOT EXISTS Config (configKey VARCHAR(100) PRIMARY KEY NOT NULL, configValue VARCHAR(100) NOT NULL, configDataTypeClass VARCHAR(100) NOT NULL)");
-        mySql.execute("CREATE TABLE IF NOT EXISTS MutedPlayers (playerId bigint PRIMARY KEY NOT NULL, muteEnd datetime NOT NULL, reason VARCHAR(200))");
     }
 
     public void addCommand(Command command) {
@@ -86,14 +80,4 @@ public class SQLManager {
         }
     }
 
-    public void loadConfig() {
-        ResultSet resultSet = mySql.executeWithResult("SELECT * FROM Config");
-        try {
-            while (resultSet.next()) {
-                serverManager.getConfigManager().addConfig(resultSet.getString("configKey"), resultSet.getString("configValue"), resultSet.getString("configDataTypeClass"));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
 }

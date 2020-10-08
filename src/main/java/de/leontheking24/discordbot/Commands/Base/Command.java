@@ -1,6 +1,5 @@
 package de.leontheking24.discordbot.Commands.Base;
 
-import de.leontheking24.discordbot.Database.SQLManager;
 import de.leontheking24.discordbot.ServerManager;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -8,7 +7,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class Command implements ICommandExecute {
 
     private final ServerManager serverManager;
-    private final SQLManager sqlManager;
+    private final CommandSqlManager sqlManager;
     private final String trigger;
     private String value;
     private final String description;
@@ -17,7 +16,7 @@ public class Command implements ICommandExecute {
 
     public Command(ServerManager serverManager, String trigger, String value, String description, String permission, CommandType commandType) {
         this.serverManager = serverManager;
-        sqlManager = serverManager.getSqlManager();
+        sqlManager = serverManager.getCommandSqlManager();
         this.trigger = trigger;
         this.value = value;
         this.description = description;
@@ -27,7 +26,7 @@ public class Command implements ICommandExecute {
 
     public Command(ServerManager serverManager, String trigger, String description, String permission, CommandType commandType) {
         this.serverManager = serverManager;
-        sqlManager = serverManager.getSqlManager();
+        sqlManager = serverManager.getCommandSqlManager();
         this.trigger = trigger;
         this.description = description;
         this.permission = permission;
@@ -36,7 +35,7 @@ public class Command implements ICommandExecute {
 
     public Command(ServerManager serverManager, String trigger, String description, CommandType commandType) {
         this.serverManager = serverManager;
-        sqlManager = serverManager.getSqlManager();
+        sqlManager = serverManager.getCommandSqlManager();
         this.trigger = trigger;
         this.description = description;
         this.commandType = commandType;

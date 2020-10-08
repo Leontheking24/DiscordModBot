@@ -9,6 +9,7 @@ import de.leontheking24.discordbot.Utils.Utils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConfigManager {
@@ -160,6 +161,17 @@ public class ConfigManager {
 
         return used.getDriver().equals(defaultConfig.getDriver()) && used.getServer().equals(defaultConfig.getServer()) && used.getPort() == defaultConfig.getPort()
                 && used.getDatabaseName().equals(defaultConfig.getDatabaseName());
+    }
+
+    public void loadConfig() {
+        ResultSet resultSet = serverManager.getMySql().executeWithResult("SELECT * FROM Config");
+        try {
+            while (resultSet.next()) {
+                serverManager.getConfigManager().addConfig(resultSet.getString("configKey"), resultSet.getString("configValue"), resultSet.getString("configDataTypeClass"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 }

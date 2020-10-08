@@ -19,6 +19,9 @@ public class MySql {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        execute("CREATE TABLE IF NOT EXISTS BlackListedWords(value VARCHAR(100) NOT NULL PRIMARY KEY)");
+        execute("CREATE TABLE IF NOT EXISTS Config (configKey VARCHAR(100) PRIMARY KEY NOT NULL, configValue VARCHAR(100) NOT NULL, configDataTypeClass VARCHAR(100) NOT NULL)");
+        execute("CREATE TABLE IF NOT EXISTS MutedPlayers (playerId bigint PRIMARY KEY NOT NULL, muteEnd datetime NOT NULL, reason VARCHAR(200))");
     }
 
     public Connection connection() {
@@ -33,7 +36,6 @@ public class MySql {
             dataSource.setPassword(config.getPassword());
 
             connection = dataSource.getConnection();
-
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

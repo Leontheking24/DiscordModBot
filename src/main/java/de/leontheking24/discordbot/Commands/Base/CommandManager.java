@@ -22,7 +22,7 @@ public class CommandManager {
 
     public void deleteCommand(Command command) {
         commandList.remove(command.getTrigger().toUpperCase());
-        serverManager.getSqlManager().deleteCommand(command.getTrigger());
+        serverManager.getCommandSqlManager().deleteCommand(command.getTrigger());
     }
 
     public boolean isCommandExists(String trigger) {
@@ -61,7 +61,7 @@ public class CommandManager {
 
     public void initToDatabase() {
         for(Command command : commandList.values()) {
-            serverManager.getSqlManager().addCommand(command);
+            serverManager.getCommandSqlManager().addCommand(command);
         }
     }
 }

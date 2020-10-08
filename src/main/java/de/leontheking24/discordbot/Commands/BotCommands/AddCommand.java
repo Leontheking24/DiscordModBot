@@ -36,7 +36,7 @@ public class AddCommand extends Command {
 
                     Command command = new Command(serverManager, trigger, value, description, null, CommandType.User);
                     commandManager.addCommand(command);
-                    serverManager.getSqlManager().addCommand(command);
+                    serverManager.getCommandSqlManager().addCommand(command);
                     channel.sendMessage(utils.createEmbed(serverManager.getMessage("addcommand_success_title"), Color.GREEN,
                             serverManager.getMessage("addcommand_success_message").replace("{Command}", trigger))).queue();
                     return;
