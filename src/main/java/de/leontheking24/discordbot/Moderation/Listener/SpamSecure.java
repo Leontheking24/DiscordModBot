@@ -44,16 +44,20 @@ public class SpamSecure extends ListenerAdapter {
 
                 } else {
                     List<Message> deleteMessage = createUserList(member.getId(), event);
+                    boolean couldDelete = false;
 
                     if(deleteMessage.size() >= spamManager.getMessagesInTime()) {
                         for(Message deleteMsg : deleteMessage) {
                             try {
                                 deleteMsg.delete().queue();
+                                couldDelete = true;
                             } catch (Exception e) {
                             }
                         }
-                        serverManager.getNotificationChannel().sendMessage(SpamMessage(member, event.getChannel(), deleteMessage.get(deleteMessage.size()-1).getContentRaw(),
-                                deleteMessage.size()).build()).queue(message -> spamManager.addDetectiveMember(member, deleteMessage.size(), message.getIdLong()));
+                        if(couldDelete) {
+                            serverManager.getNotificationChannel().sendMessage(SpamMessage(member, event.getChannel(), deleteMessage.get(deleteMessage.size()-1).getContentRaw(),
+                                    deleteMessage.size()).build()).queue(message -> spamManager.addDetectiveMember(member, deleteMessage.size(), message.getIdLong()));
+                        }
                     }
                 }
             }

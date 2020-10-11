@@ -15,7 +15,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.SelfUser;
-import net.dv8tion.jda.api.entities.TextChannel;
 
 import javax.security.auth.login.LoginException;
 import java.util.Timer;
@@ -67,8 +66,12 @@ public class DiscordBot {
                 int cooldown = 0;
                 for(Guild guild : jda.getGuilds()) {
                     if(cooldown <= 20) {
-                        serverLists.addServer(new ServerManager(guild.getIdLong()));
-                        logger.log(Level.INFO, "Server with id " + guild.getIdLong() + " was initialized");
+                        try {
+                            serverLists.addServer(new ServerManager(guild.getIdLong()));
+                            logger.log(Level.INFO, "Server with id " + guild.getIdLong() + " was initialized");
+                        } catch (Exception e) {
+                            logger.log(Level.WARNING, "Couldn't start the bot for server " + guild.getId());
+                        }
                         cooldown++;
                     } else {
                         new Timer().schedule(new TimerTask() {
@@ -85,7 +88,6 @@ public class DiscordBot {
                 jda.getPresence().setActivity(Activity.playing("Status: Online"));
             }
         },1000*2);
-
     }
 
     public static ServerLists getServerLists() {

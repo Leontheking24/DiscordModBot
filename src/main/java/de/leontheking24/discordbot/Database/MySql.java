@@ -9,7 +9,7 @@ public class MySql {
 
     private Connection connection;
     private Statement statement;
-    private DatabaseConfig config;
+    private final DatabaseConfig config;
 
     public MySql(DatabaseConfig config) {
         this.config = config;
@@ -52,12 +52,9 @@ public class MySql {
             dataSource.setPassword(config.getPassword());
             connection = dataSource.getConnection();
 
-        } catch (ClassNotFoundException e) {
-            return false;
-        } catch (SQLException throwables) {
+        } catch (ClassNotFoundException | SQLException e) {
             return false;
         }
-
         return true;
     }
 

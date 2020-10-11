@@ -48,6 +48,7 @@ public class ClearCommand extends Command {
 
                     } else {
                         deletedMessagesIgnorePlayer(channel, selectedChannels, amount);
+                        return;
                     }
                 } else {
                     channel.sendMessage(new EmbedBuilder().setTitle(serverManager.getMessage("clear_secure_title")).setColor(Color.RED).setDescription(serverManager.getMessage("clear_secure_body")).build()).queue();
@@ -96,10 +97,9 @@ public class ClearCommand extends Command {
             deleteChannelString = deleteChannelString.substring(0, deleteChannelString.length()-2);
             deleteMemberString = deleteMemberString.substring(0, deleteMemberString.length()-2);
             deleteMessage(deleteInt, deleteMemberString, deleteChannelString);
-        } else {
-            senderChannel.sendMessage(utils.createEmbed(serverManager.getMessage("clear_error_title"), Color.RED, serverManager.getMessage("clear_error_body"))).queue();
+            return;
         }
-
+        senderChannel.sendMessage(utils.createEmbed(serverManager.getMessage("clear_error_title"), Color.RED, serverManager.getMessage("clear_error_body"))).queue();
     }
 
     public void deletedMessagesIgnorePlayer(TextChannel senderChannel, List<TextChannel> channels, int deleteAmount) {
@@ -125,10 +125,9 @@ public class ClearCommand extends Command {
             deleteChannelString = deleteChannelString.substring(0, deleteChannelString.length()-2);
             deleteMemberString = deleteMemberString.substring(0, deleteMemberString.length()-2);
             deleteMessage(deleteInt, deleteMemberString, deleteChannelString);
-        } else {
-            senderChannel.sendMessage(utils.createEmbed(serverManager.getMessage("clear_error_title"), Color.RED, serverManager.getMessage("clear_error_body"))).queue();
+            return;
         }
-
+        senderChannel.sendMessage(utils.createEmbed(serverManager.getMessage("clear_error_title"), Color.RED, serverManager.getMessage("clear_error_body"))).queue();
     }
 
     public void deleteMessage(int messageAmount, String deletedMember, String deletedChannel) {

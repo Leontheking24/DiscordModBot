@@ -39,7 +39,7 @@ public class ConfigCommand extends Command {
                     set(channel, args);
                     return;
 
-                } else if(args[0].equalsIgnoreCase("get")) {
+                } else if(args[0].equalsIgnoreCase("get") || args[0].equalsIgnoreCase("show")) {
                     get(channel, args);
                     return;
 

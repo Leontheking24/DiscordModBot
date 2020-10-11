@@ -1,6 +1,5 @@
 package de.leontheking24.discordbot.Permissions;
 
-import de.leontheking24.discordbot.Commands.Base.Command;
 import de.leontheking24.discordbot.Database.MySql;
 import de.leontheking24.discordbot.DiscordBot;
 import de.leontheking24.discordbot.ServerManager;

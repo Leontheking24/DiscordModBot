@@ -10,15 +10,13 @@ import java.sql.SQLException;
 
 public class SqlManager {
 
-    private MySql mySql;
-    private DatabaseConfig config;
-    private Utils utils = DiscordBot.getUtils();
+    private final MySql mySql;
+    private final Utils utils = DiscordBot.getUtils();
+    private final String key = "jbW3ElDw82";
 
     public SqlManager(DatabaseConfig config) {
-        this.config = config;
         mySql = new MySql(config);
     }
-
 
     public void initConfig(ServerManager serverManager) {
         mySql.execute("CREATE TABLE IF NOT EXISTS Config(serverId bigint PRIMARY KEY NOT NULL, databaseDriver VARCHAR(100) NOT NULL, databaseServer VARCHAR(100) NOT NULL, " +
@@ -27,7 +25,7 @@ public class SqlManager {
 
         if(checkConfigExists(serverId)) {
             ResultSet resultSet = mySql.executeWithResult("SELECT databaseDriver, databaseServer, databasePort, databaseName, " +
-                    "AES_DECRYPT(databaseUsername, 'jbW3ElDw82') AS databaseUsername, AES_DECRYPT(databasePassword, 'jbW3ElDw82') AS databasePassword FROM Config WHERE serverId = '" + serverId + "'");
+                    "AES_DECRYPT(databaseUsername, '" + key + "') AS databaseUsername, AES_DECRYPT(databasePassword, '" + key + "') AS databasePassword FROM Config WHERE serverId = '" + serverId + "'");
             try {
                 while (resultSet.next()) {
                     serverManager.getDatabaseConfig().setDriver(resultSet.getString("databaseDriver"));
@@ -43,7 +41,7 @@ public class SqlManager {
             }
         } else {
             mySql.execute("INSERT INTO Config (serverId, databaseDriver, databaseServer, databasePort, databaseName, databaseUsername, databasePassword) VALUES " +
-                    "('" + serverId + "', 'com.mysql.jdbc.Driver', '45.142.178.20', '3306', 'Discord-" + serverId + "', AES_ENCRYPT('Leon', 'jbW3ElDw82'), AES_ENCRYPT('WfePGfsvmSuwams24', 'jbW3ElDw82'))");
+                    "('" + serverId + "', 'com.mysql.jdbc.Driver', '45.142.178.20', '3306', 'Discord-" + serverId + "', AES_ENCRYPT('Leon', '" + key + "'), AES_ENCRYPT('WfePGfsvmSuwams24', '" + key + "'))");
             mySql.execute("CREATE DATABASE IF NOT EXISTS `Discord-" + serverId + "`;");
             initConfig(serverManager);
         }
@@ -51,7 +49,7 @@ public class SqlManager {
 
     public void updateServerConfig(long serverId, DatabaseConfig config) {
         mySql.execute("UPDATE Config SET databaseDriver='" + config.getDriver() + "', databaseServer='" + config.getServer() + "', databasePort='" + config.getPort() + "', databaseName='" + config.getDatabaseName() +
-                "', databaseUsername=AES_ENCRYPT('" + config.getUsername() + "', 'jbW3ElDw82'), databasePassword=AES_ENCRYPT('" + config.getPassword() + "', 'jbW3ElDw82') WHERE serverId='" + serverId + "'");
+                "', databaseUsername=AES_ENCRYPT('" + config.getUsername() + "', '" + key + "'), databasePassword=AES_ENCRYPT('" + config.getPassword() + "', '" + key + "') WHERE serverId='" + serverId + "'");
     }
 
     private boolean checkConfigExists(long serverId) {
