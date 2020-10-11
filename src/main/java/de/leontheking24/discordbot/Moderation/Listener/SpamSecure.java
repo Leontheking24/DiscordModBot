@@ -25,38 +25,40 @@ public class SpamSecure extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-        serverManager = DiscordBot.getServerManager(event.getGuild().getIdLong());
-        spamManager = serverManager.getSpamManager();
+        if(!event.getMember().getUser().isBot()) {
+            serverManager = DiscordBot.getServerManager(event.getGuild().getIdLong());
+            spamManager = serverManager.getSpamManager();
 
-        if(Boolean.parseBoolean(serverManager.getConfigManager().getConfig("enableSpamProtection"))) {
-            Member member = event.getMember();
-            if(!serverManager.getPermissionManager().playerHasPermission(member.getIdLong(), "events.spam.ignore"))
-
-            if(!member.getUser().isBot()) {
-                if(spamManager.isMemberDetective(member)) {
-                    try {
-                        event.getMessage().delete().queue();
-                        spamManager.updateCooldown(member, spamManager.getSpamCooldown());
-                        spamManager.updateMessageAmount(member, spamManager.getMessageAmount(member)+1);
-                        updateSpamMessage(member, event.getChannel(), event.getMessage().getContentRaw(), spamManager.getMessageAmount(member));
-                    } catch (Exception e) {
-                    }
-
-                } else {
-                    List<Message> deleteMessage = createUserList(member.getId(), event);
-                    boolean couldDelete = false;
-
-                    if(deleteMessage.size() >= spamManager.getMessagesInTime()) {
-                        for(Message deleteMsg : deleteMessage) {
+            if(Boolean.parseBoolean(serverManager.getConfigManager().getConfig("enableSpamProtection"))) {
+                Member member = event.getMember();
+                if(!(serverManager.getPermissionManager().playerHasPermission(member.getIdLong(), "events.spam.ignore"))) {
+                    if(!member.getUser().isBot()) {
+                        if(spamManager.isMemberDetective(member)) {
                             try {
-                                deleteMsg.delete().queue();
-                                couldDelete = true;
+                                event.getMessage().delete().queue();
+                                spamManager.updateCooldown(member, spamManager.getSpamCooldown());
+                                spamManager.updateMessageAmount(member, spamManager.getMessageAmount(member)+1);
+                                updateSpamMessage(member, event.getChannel(), event.getMessage().getContentRaw(), spamManager.getMessageAmount(member));
                             } catch (Exception e) {
                             }
-                        }
-                        if(couldDelete) {
-                            serverManager.getNotificationChannel().sendMessage(SpamMessage(member, event.getChannel(), deleteMessage.get(deleteMessage.size()-1).getContentRaw(),
-                                    deleteMessage.size()).build()).queue(message -> spamManager.addDetectiveMember(member, deleteMessage.size(), message.getIdLong()));
+
+                        } else {
+                            List<Message> deleteMessage = createUserList(member.getId(), event);
+                            boolean couldDelete = false;
+
+                            if(deleteMessage.size() >= spamManager.getMessagesInTime()) {
+                                for(Message deleteMsg : deleteMessage) {
+                                    try {
+                                        deleteMsg.delete().queue();
+                                        couldDelete = true;
+                                    } catch (Exception e) {
+                                    }
+                                }
+                                if(couldDelete) {
+                                    serverManager.getNotificationChannel().sendMessage(SpamMessage(member, event.getChannel(), deleteMessage.get(deleteMessage.size()-1).getContentRaw(),
+                                            deleteMessage.size()).build()).queue(message -> spamManager.addDetectiveMember(member, deleteMessage.size(), message.getIdLong()));
+                                }
+                            }
                         }
                     }
                 }

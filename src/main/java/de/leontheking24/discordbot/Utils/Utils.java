@@ -25,16 +25,16 @@ public class Utils {
             }
         }
 
-        if(Boolean.valueOf(serverManager.getConfigManager().getConfig("isCheckingLeetspeakAtBlacklist"))) {
-            String value2Leetspeak = "";
+        if(Boolean.parseBoolean(serverManager.getConfigManager().getConfig("isCheckingLeetspeakAtBlacklist"))) {
+            StringBuilder value2Leetspeak = new StringBuilder();
             for(char character : value2Char) {
                 if(ELeetSpeak.getCharByLeet(character) != null) {
-                    value2Leetspeak += ELeetSpeak.getCharByLeet(character);
+                    value2Leetspeak.append(ELeetSpeak.getCharByLeet(character));
                 } else {
-                    value2Leetspeak += character;
+                    value2Leetspeak.append(character);
                 }
             }
-            Likeness leet = checkLikeness(value1Char, value2Leetspeak.toCharArray(), 0);
+            Likeness leet = checkLikeness(value1Char, value2Leetspeak.toString().toCharArray(), 0);
             if(leet.isLikeness()) {
                 return leet;
             }
@@ -93,9 +93,7 @@ public class Utils {
 
     public boolean isStringAMessageId(String arg) {
         if(arg.length() == 18) {
-            if(isNumeric(arg)) {
-                return true;
-            }
+            return isNumeric(arg);
         }
         return false;
     }

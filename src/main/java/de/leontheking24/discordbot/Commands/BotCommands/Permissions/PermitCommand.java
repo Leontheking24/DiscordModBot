@@ -37,7 +37,7 @@ public class PermitCommand extends Command {
                         String permissionSet = "";
                         for(String arg : args) {
                             if(!(arg.startsWith("<@") && arg.endsWith(">"))) {
-                                if(!serverManager.getPermissionManager().playerHasPermission(member.getIdLong(), arg)) {
+                                if(!serverManager.getPermissionManager().playerPermissionCheck(member.getIdLong(), arg)) {
                                     serverManager.getPermissionManager().playerAddPermission(member.getIdLong(), arg);
                                     permissionSet += arg + ", ";
                                 }
@@ -56,7 +56,7 @@ public class PermitCommand extends Command {
                         String permissionSet = "";
                         for(String arg : args) {
                             if(!(arg.startsWith("<@") && arg.endsWith(">"))) {
-                                if(!serverManager.getPermissionManager().groupHasPermission(role.getIdLong(), arg)) {
+                                if(!serverManager.getPermissionManager().groupPermissionCheck(role.getIdLong(), arg)) {
                                     serverManager.getPermissionManager().groupAddPermission(role.getIdLong(), arg);
                                     permissionSet += arg + ", ";
                                 }

@@ -40,6 +40,7 @@ public class MuteCommand extends Command {
                             for(int i = 2; i < args.length; i++) reason.append(args[i]).append(" ");
                             reason.substring(0, reason.length() - 1);
                         }
+                        assert reason != null;
                         serverManager.getMuteManager().mutePlayer(mutedPlayer.getIdLong(), muteTime, reason.toString());
                         return;
                     }
@@ -60,7 +61,7 @@ public class MuteCommand extends Command {
         if(correctChars.contains(endchar) && utils.isNumeric(timeStr)) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
-            Integer time = Integer.valueOf(timeStr);
+            int time = Integer.parseInt(timeStr);
 
             if(endchar == 'm') {
                 calendar.add(Calendar.MINUTE, time);

@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 
 public class PermissionManager {
@@ -71,7 +72,7 @@ public class PermissionManager {
                     return true;
                 }
             }
-            for(Role role : serverManager.getGuild().getMemberById(playerId).getRoles()) {
+            for(Role role : Objects.requireNonNull(serverManager.getGuild().getMemberById(playerId)).getRoles()) {
                 if(groupHasPermission(role.getIdLong(), permission)) {
                     return true;
                 }

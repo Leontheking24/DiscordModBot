@@ -1,4 +1,4 @@
-package de.leontheking24.discordbot.Commands.BotCommands;
+package de.leontheking24.discordbot.Commands.BotCommands.UserCommands;
 
 import de.leontheking24.discordbot.Commands.Base.Command;
 import de.leontheking24.discordbot.Commands.Base.CommandType;

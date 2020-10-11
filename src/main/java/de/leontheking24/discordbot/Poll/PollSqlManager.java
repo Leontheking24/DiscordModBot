@@ -10,14 +10,15 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 public class PollSqlManager {
 
-    private ServerManager serverManager;
-    private PollManager pollManager;
-    private MySql mySql;
+    private final ServerManager serverManager;
+    private final PollManager pollManager;
+    private final MySql mySql;
 
     public PollSqlManager(ServerManager serverManager) {
         this.serverManager = serverManager;
@@ -31,21 +32,21 @@ public class PollSqlManager {
 
     public void insertPoll(long messageID, long channelID, List<String> reactions) {
         mySql.execute("INSERT INTO Polls (messageID, channelID) VALUES ('" + messageID + "', '" + channelID + "')");
-        String react = "";
+        StringBuilder react = new StringBuilder();
         for(String reaction : reactions) {
-            react += reaction + ", ";
+            react.append(reaction).append(", ");
         }
-        react = react.substring(0, react.length()-2);
+        react = new StringBuilder(react.substring(0, react.length() - 2));
         mySql.execute("INSERT INTO PollReactions(messageID, reaction) VALUES ('" + messageID + "', '" + react + "')");
     }
 
     public void insertPoll(long messageID, long channelID, List<String> reactions, Date end) {
         mySql.execute("INSERT INTO Polls (messageID, channelID, endDate) VALUES ('" + messageID + "', '" + channelID + "', '" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(end) + "')");
-        String react = "";
+        StringBuilder react = new StringBuilder();
         for(String reaction : reactions) {
-            react += reaction + ", ";
+            react.append(reaction).append(", ");
         }
-        react = react.substring(0, react.length()-2);
+        react = new StringBuilder(react.substring(0, react.length() - 2));
         mySql.execute("INSERT INTO PollReactions(messageID, reaction) VALUES ('" + messageID + "', '" + react + "')");
     }
 
@@ -83,9 +84,7 @@ public class PollSqlManager {
             ResultSet resultSetReactions = mySql.executeWithResult("SELECT reaction FROM PollReactions WHERE messageID='" + poll.getMessageId() + "'");
             try {
                 while (resultSetReactions.next()) {
-                    for(String reaction: resultSetReactions.getString("reaction").split(", ")) {
-                        reactions.add(reaction);
-                    }
+                    Collections.addAll(reactions, resultSetReactions.getString("reaction").split(", "));
                     poll.setReactions(reactions);
                 }
             } catch (SQLException e) {

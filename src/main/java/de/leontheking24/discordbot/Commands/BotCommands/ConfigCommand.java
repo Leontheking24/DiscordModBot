@@ -38,21 +38,14 @@ public class ConfigCommand extends Command {
                 if(args[0].equalsIgnoreCase("set")) {
                     set(channel, args);
                     return;
-
                 } else if(args[0].equalsIgnoreCase("get") || args[0].equalsIgnoreCase("show")) {
                     get(channel, args);
                     return;
-
                 } else if(args[0].equalsIgnoreCase("file")) {
                     file(message);
                     return;
-
                 } else if(args[0].equalsIgnoreCase("upload")) {
                     upload(channel, message);
-                    return;
-
-                } else {
-                    channel.sendMessage(helpOverview()).queue();
                     return;
                 }
             }
@@ -141,14 +134,12 @@ public class ConfigCommand extends Command {
                             }
                         }
                     }
-
                     channel.sendMessage(utils.createEmbed(serverManager.getMessage("config_upload_success_title"), Color.GREEN,
                             serverManager.getMessage("config_upload_success_body"))).queue();
 
                 } catch (IOException | ExecutionException | InterruptedException e) {
                     DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
                 }
-
 
             } else {
                 channel.sendMessage(utils.createEmbed(serverManager.getMessage("config_upload_wrong_title"), Color.RED,

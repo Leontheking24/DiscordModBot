@@ -1,4 +1,4 @@
-package de.leontheking24.discordbot.Commands.BotCommands;
+package de.leontheking24.discordbot.Commands.BotCommands.UserCommands;
 
 import de.leontheking24.discordbot.Commands.Base.Command;
 import de.leontheking24.discordbot.Commands.Base.CommandManager;
@@ -28,13 +28,16 @@ public class AddCommand extends Command {
         if(!isArgumentLengthZero(message)) {
             String[] arguments = message.getContentRaw().substring(serverManager.getBotCommandPrefix().length() + trigger.length() + 1).split("\n");
 
-            if(arguments.length == 3) {
+            if(arguments.length >= 3) {
                 String trigger = arguments[0];
                 if(!commandManager.isCommandExists(trigger)) {
                     String value = arguments[1];
                     String description = arguments[2];
-
-                    Command command = new Command(serverManager, trigger, value, description, null, CommandType.User);
+                    String permission = null;
+                    if(arguments.length == 4) {
+                        permission = arguments[3];
+                    }
+                    Command command = new Command(serverManager, trigger, value, description, permission, CommandType.User);
                     commandManager.addCommand(command);
                     serverManager.getCommandSqlManager().addCommand(command);
                     channel.sendMessage(utils.createEmbed(serverManager.getMessage("addcommand_success_title"), Color.GREEN,

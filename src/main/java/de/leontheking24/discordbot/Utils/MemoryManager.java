@@ -10,16 +10,15 @@ import java.util.logging.Level;
 
 public class MemoryManager {
 
-    private Runtime runtime;
-    private NumberFormat numberFormat = new DecimalFormat("#####,##0.0");
-    private Timer timer;
+    private final Runtime runtime;
+    private final NumberFormat numberFormat = new DecimalFormat("#####,##0.0");
 
     public MemoryManager() {
         runtime = Runtime.getRuntime();
     }
 
     public void startMemoryScheduler() {
-        timer = new Timer();
+        Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {

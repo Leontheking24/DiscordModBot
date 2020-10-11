@@ -7,22 +7,20 @@ import de.leontheking24.discordbot.ServerManager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Timer;
 import java.util.logging.Level;
 
 public class PollManager {
 
-    private ServerManager serverManager;
-
-    private HashMap<Long, Poll> pollList;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-    private boolean willPollDeleteAfterFinish;
-    private String seperateKey;
+    private final ServerManager serverManager;
+    private final HashMap<Long, Poll> pollList;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    private final boolean willPollDeleteAfterFinish;
+    private final String seperateKey;
 
     public PollManager(ServerManager serverManager) {
         this.serverManager = serverManager;
         pollList = new HashMap<>();
-        willPollDeleteAfterFinish = Boolean.valueOf(serverManager.getConfigManager().getConfig("deletePollAfterFinish"));
+        willPollDeleteAfterFinish = Boolean.parseBoolean(serverManager.getConfigManager().getConfig("deletePollAfterFinish"));
         seperateKey = serverManager.getConfigManager().getConfig("seperateKey");
     }
 

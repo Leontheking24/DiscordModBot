@@ -128,8 +128,7 @@ public class ConfigManager {
         String user = getConfig("databaseUsername");
         String password = getConfig("databasePassword");
 
-        if(driver != null && server != null && (!getConfig("databasePort").equals("0"))
-                && dbname != null &&  user != null) {
+        if(driver != null && server != null && (!getConfig("databasePort").equals("0")) && dbname != null &&  user != null) {
             int port = Integer.parseInt(getConfig("databasePort"));
 
             DatabaseConfig testconfig = getUserDatabaseConfig();
@@ -138,7 +137,6 @@ public class ConfigManager {
             if(!(config.getDriver().equals(driver) && config.getServer().equals(server) && config.getPort() == port &&
                     config.getDatabaseName().equals(dbname) && config.getUsername().equals(user) && config.getPassword().equals(password))) {
                 return serverManager.getMySql().canConnect(testconfig);
-
             }
         }
         return false;
