@@ -42,7 +42,6 @@ public class ConfigManager {
         }
     }
 
-
     public void initAllConfigs() {
         if(areSettingsSet()) {
             for(Object key : configValues.keySet()) {

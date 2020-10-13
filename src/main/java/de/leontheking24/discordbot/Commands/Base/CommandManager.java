@@ -25,6 +25,11 @@ public class CommandManager {
         serverManager.getCommandSqlManager().deleteCommand(command.getTrigger());
     }
 
+    public void updateCommand(Command command) {
+        commandList.replace(command.getTrigger(), command);
+        serverManager.getCommandSqlManager().updateCommand(command);
+    }
+
     public boolean isCommandExists(String trigger) {
         return commandList.containsKey(trigger.toUpperCase());
     }

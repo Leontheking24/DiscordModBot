@@ -16,6 +16,7 @@ public class AddCommand extends Command {
     private final static String trigger = "AddCommand";
     private final CommandManager commandManager;
     private final Utils utils = DiscordBot.getUtils();
+    private final String permissionBase = "command.user.";
 
     public AddCommand(ServerManager serverManager) {
         super(serverManager, trigger, serverManager.getMessage("addcommand_description"), "command.addCommand", CommandType.Bot);
@@ -35,7 +36,7 @@ public class AddCommand extends Command {
                     String description = arguments[2];
                     String permission = null;
                     if(arguments.length == 4) {
-                        permission = arguments[3];
+                        permission = permissionBase + arguments[3];
                     }
                     Command command = new Command(serverManager, trigger, value, description, permission, CommandType.User);
                     commandManager.addCommand(command);

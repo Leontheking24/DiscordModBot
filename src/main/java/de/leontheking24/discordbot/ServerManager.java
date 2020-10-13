@@ -6,6 +6,7 @@ import de.leontheking24.discordbot.Commands.BotCommands.Permissions.UnpermitComm
 import de.leontheking24.discordbot.Commands.BotCommands.Permissions.UserInfoCommand;
 import de.leontheking24.discordbot.Commands.BotCommands.RoleAssignment.ReactRoleManager;
 import de.leontheking24.discordbot.Commands.BotCommands.UserCommands.AddCommand;
+import de.leontheking24.discordbot.Commands.BotCommands.UserCommands.EditCommand;
 import de.leontheking24.discordbot.Commands.BotCommands.UserCommands.InfoCommand;
 import de.leontheking24.discordbot.Commands.BotCommands.UserCommands.RemoveCommand;
 import de.leontheking24.discordbot.Config.ConfigManager;
@@ -170,6 +171,7 @@ public class ServerManager {
         if(Boolean.parseBoolean(configManager.getConfig("enableUserCommands"))) {
             commandManager.addCommand(new AddCommand(this));
             commandManager.addCommand(new RemoveCommand(this));
+            commandManager.addCommand(new EditCommand(this));
         }
     }
 

@@ -32,16 +32,15 @@ public class MuteCommand extends Command {
                 if(message.getMentionedMembers().size() == 1) {
                     Member mutedPlayer = message.getMentionedMembers().get(0);
                     Date muteTime = getMuteTime(args[1]);
-                    StringBuilder reason = null;
+                    String reason = null;
 
                     if(muteTime != null) {
                         if(args.length >= 3) {
-                            reason = new StringBuilder();
-                            for(int i = 2; i < args.length; i++) reason.append(args[i]).append(" ");
+                            for(int i = 2; i < args.length; i++) reason += args[i] + " ";
                             reason.substring(0, reason.length() - 1);
                         }
                         assert reason != null;
-                        serverManager.getMuteManager().mutePlayer(mutedPlayer.getIdLong(), muteTime, reason.toString());
+                        serverManager.getMuteManager().mutePlayer(mutedPlayer.getIdLong(), muteTime, reason);
                         return;
                     }
                     channel.sendMessage(utils.createEmbed(serverManager.getMessage("mute_convert_title"), Color.RED, serverManager.getMessage("mute_convert_body").replace("{value}", args[1]))).queue();

@@ -39,6 +39,13 @@ public class CommandSqlManager {
         }
     }
 
+    public void updateCommand(Command command) {
+        mySql.execute("UPDATE Commands SET value='" + command.getValue() + "', description='" + command.getDescription() + "' WHERE trigger_word='" + command.getTrigger() + "'");
+        if(command.hasPermission()) {
+            mySql.execute("UPDATE Commands SET permission='" + command.getPermission() + "' WHERE trigger_word='" + command.getTrigger() + "'");
+        }
+    }
+
     public void deleteCommand(String commandTrigger) {
         mySql.execute("DELETE FROM Commands WHERE trigger_word='" + commandTrigger + "'");
         mySql.execute("DELETE FROM Counter WHERE name='" + commandTrigger + "'");

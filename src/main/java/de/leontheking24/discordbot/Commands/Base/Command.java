@@ -10,7 +10,7 @@ public class Command implements ICommandExecute {
     private final CommandSqlManager sqlManager;
     private final String trigger;
     private String value;
-    private final String description;
+    private String description;
     private String permission;
     private final CommandType commandType;
 
@@ -47,6 +47,10 @@ public class Command implements ICommandExecute {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean hasValue() {

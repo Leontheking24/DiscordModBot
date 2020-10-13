@@ -81,10 +81,10 @@ public class ConfigCommand extends Command {
                         DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
                     }
                 }
-            } else {
-                channel.sendMessage(utils.createEmbed(serverManager.getMessage("config_set_notfound_title"), Color.RED,
-                        serverManager.getMessage("config_set_notfound_body").replace("{key}", args[1]))).queue();
             }
+            channel.sendMessage(utils.createEmbed(serverManager.getMessage("config_set_notfound_title"), Color.RED,
+                    serverManager.getMessage("config_set_notfound_body").replace("{key}", args[1]))).queue();
+            return;
         }
         channel.sendMessage(utils.createEmbed(serverManager.getMessage("config_set_syntax_title"), Color.RED,
                 serverManager.getMessage("config_set_syntax_body").replace("{prefix}", serverManager.getBotCommandPrefix()).replace("{trigger}", trigger))).queue();
