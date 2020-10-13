@@ -81,6 +81,7 @@ public class ConfigCommand extends Command {
                         DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
                     }
                 }
+                return;
             }
             channel.sendMessage(utils.createEmbed(serverManager.getMessage("config_set_notfound_title"), Color.RED,
                     serverManager.getMessage("config_set_notfound_body").replace("{key}", args[1]))).queue();

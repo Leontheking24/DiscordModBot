@@ -30,7 +30,7 @@ public class DefaultConfig {
     public static int messageTime=30;
 
     //Poll-Config
-    public static String seperateKey=";";
+    public static String pollSeparateKey=";";
     public static boolean deletePollAfterFinish=false;
 
     //Database-Config

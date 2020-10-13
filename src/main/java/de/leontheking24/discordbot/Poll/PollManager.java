@@ -15,13 +15,13 @@ public class PollManager {
     private final HashMap<Long, Poll> pollList;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     private final boolean willPollDeleteAfterFinish;
-    private final String seperateKey;
+    private final String separateKey;
 
     public PollManager(ServerManager serverManager) {
         this.serverManager = serverManager;
         pollList = new HashMap<>();
         willPollDeleteAfterFinish = Boolean.parseBoolean(serverManager.getConfigManager().getConfig("deletePollAfterFinish"));
-        seperateKey = serverManager.getConfigManager().getConfig("seperateKey");
+        separateKey = serverManager.getConfigManager().getConfig("pollSeparateKey");
     }
 
     public boolean isMessageAPoll(long messageId) {
@@ -64,8 +64,8 @@ public class PollManager {
         return this.willPollDeleteAfterFinish;
     }
 
-    public String getSeperateKey() {
-        return seperateKey;
+    public String getSeparateKey() {
+        return separateKey;
     }
 
     public void savePolls() {

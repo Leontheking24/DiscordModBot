@@ -79,7 +79,7 @@ public class PollCommand extends Command {
         PollMessageSearch pollMessageSearch = searchForMessage(message);
 
         String[] args = message.getContentRaw().replace(pollChannelSearch.getReplaceArgs(), "").replace(pollDateSearch.getReplaceArgs(), "")
-                .replace(pollMessageSearch.getReplaceArgs(), "").substring(trigger.length() + serverManager.getBotCommandPrefix().length() + 1).split(pollManager.getSeperateKey());
+                .replace(pollMessageSearch.getReplaceArgs(), "").substring(trigger.length() + serverManager.getBotCommandPrefix().length() + 1).split(pollManager.getSeparateKey());
 
         if(args.length > 1) {
             EmbedBuilder pollEmbed = new EmbedBuilder();
@@ -141,7 +141,12 @@ public class PollCommand extends Command {
     public EmbedBuilder help() {
         EmbedBuilder help = new EmbedBuilder();
         help.setTitle(serverManager.getMessage("poll_help_title")).setColor(Color.cyan);
-        help.addField("Seperate-Key", pollManager.getSeperateKey(), false);
+        help.setDescription(serverManager.getMessage("poll_help_description"));
+        help.addField(serverManager.getMessage("poll_help_create_title"), serverManager.getMessage("poll_help_create_body").replace("{prefix}", serverManager.getBotCommandPrefix()).replace( "{trigger}", trigger).replace("{separate}", pollManager.getSeparateKey()), false);
+        help.addField(serverManager.getMessage("poll_help_finish_title"), serverManager.getMessage("poll_help_finish_body"), false);
+        help.addField(serverManager.getMessage("poll_help_message_title"), serverManager.getMessage("poll_help_message_body"), false);
+        help.addField(serverManager.getMessage("poll_help_channel_title"), serverManager.getMessage("poll_help_channel_body"), false);
+        help.addField(serverManager.getMessage("poll_help_date_title"), serverManager.getMessage("poll_help_date_body"), false);
         return help;
     }
 

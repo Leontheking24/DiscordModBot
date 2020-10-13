@@ -51,7 +51,8 @@ public class ClearCommand extends Command {
                         return;
                     }
                 } else {
-                    channel.sendMessage(new EmbedBuilder().setTitle(serverManager.getMessage("clear_secure_title")).setColor(Color.RED).setDescription(serverManager.getMessage("clear_secure_body")).build()).queue();
+                    channel.sendMessage(new EmbedBuilder().setTitle(serverManager.getMessage("clear_secure_title")).setColor(Color.RED).setDescription(serverManager.getMessage("clear_secure_body").replace("{max}",
+                            serverManager.getConfigManager().getConfig("maximumClearAmount"))).build()).queue();
                     return;
                 }
             }

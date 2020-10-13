@@ -16,9 +16,9 @@ import java.util.List;
 
 public class ReactRoleCommand extends Command {
 
-    private ServerManager serverManager;
+    private final ServerManager serverManager;
     private final static String trigger = "ReactRole";
-    private ReactRoleManager reactRoleManager;
+    private final ReactRoleManager reactRoleManager;
     private final Utils utils = DiscordBot.getUtils();
 
     public ReactRoleCommand(ServerManager serverManager) {
@@ -36,16 +36,12 @@ public class ReactRoleCommand extends Command {
             List<Role> roles = message.getMentionedRoles();
             List<String> emojis = EmojiParser.extractEmojis(message.getContentRaw());
             boolean toRemove = searchForRemove(args);
-            boolean toEdit = searchForEdit(args);
 
             TextChannel sendChannel = channel;
             if(toRemove) {
                 remove(channel, message, emojis, sendChannel);
 
-            } else if(toEdit) {
-                edit(channel, message, sendChannel);
-
-            } else if(roles.size() > 0 && emojis.size() > 0) {
+            }  else if(roles.size() > 0 && emojis.size() > 0) {
                 Role role = roles.get(0);
                 String emoji = emojis.get(0);
                 final long messageID = utils.searchForMessageID(message.getContentRaw().split(" "));
@@ -71,10 +67,19 @@ public class ReactRoleCommand extends Command {
                 }
             }
         } else {
-            channel.sendMessage(new EmbedBuilder().setColor(Color.MAGENTA).setTitle(serverManager.getMessage("reactrole_help_title"))
-                    .addField(serverManager.getMessage("reactrole_help_required_title"), serverManager.getMessage("reactrole_help_required_body"), true)
-                    .addField(serverManager.getMessage("reactrole_help_possible_title"), serverManager.getMessage("reactrole_help_possible_body"), false).build()).queue();
+            channel.sendMessage(help().build()).queue();
         }
+    }
+
+    public EmbedBuilder help() {
+        EmbedBuilder help = new EmbedBuilder();
+        help.setTitle(serverManager.getMessage("reactrole_help_title")).setColor(Color.cyan);
+        help.setDescription(serverManager.getMessage("reactrole_help_description"));
+        help.addField(serverManager.getMessage("reactrole_help_create_title"), serverManager.getMessage("reactrole_help_create_body").replace("{prefix}", serverManager.getBotCommandPrefix().replace("{trigger}", trigger)), false);
+        help.addField(serverManager.getMessage("reactrole_help_remove_title"), serverManager.getMessage("reactrole_help_remove_body").replace("{prefix}", serverManager.getBotCommandPrefix().replace("{trigger}", trigger)), false);
+        help.addField(serverManager.getMessage("reactrole_help_removable_title"), serverManager.getMessage("reactrole_help_removable_body"), false);
+        help.addField(serverManager.getMessage("reactrole_help_message_title"), serverManager.getMessage("reactrole_help_message_body"), false);
+        return help;
     }
 
     public void remove(TextChannel channel, Message message, List<String> emojis, TextChannel sendChannel) {
@@ -107,22 +112,6 @@ public class ReactRoleCommand extends Command {
         }
     }
 
-    public void edit(TextChannel channel, Message message, TextChannel sendChannel) {
-        final long messageID = utils.searchForMessageID(message.getContentRaw().split(" "));
-        if(messageID != 0) {
-
-        }
-    }
-
-    public boolean searchForEdit(String[] values) {
-        for(String tocheck : values) {
-            if(tocheck.equalsIgnoreCase("edit")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean searchForRemove(String[] values) {
         for(String tocheck : values) {
             if(tocheck.equalsIgnoreCase("remove")) {
@@ -135,17 +124,14 @@ public class ReactRoleCommand extends Command {
     public boolean searchForBoolean(String[] values) {
         for(String tocheck : values) {
             if(checkBoolean(tocheck)) {
-                return Boolean.valueOf(tocheck);
+                return Boolean.parseBoolean(tocheck);
             }
         }
         return false;
     }
 
     public boolean checkBoolean(String value) {
-        if(value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
-            return true;
-        }
-        return false;
+        return value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false");
     }
 
 }
