@@ -18,4 +18,8 @@ public class ServerLists {
         servers.put(serverManager.getServerId(), serverManager);
     }
 
+    public void removeServer(long serverId) {
+        servers.remove(serverId);
+    }
+
 }

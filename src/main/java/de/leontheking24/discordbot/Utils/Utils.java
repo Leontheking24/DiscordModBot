@@ -1,5 +1,6 @@
 package de.leontheking24.discordbot.Utils;
 
+import de.leontheking24.discordbot.DiscordBot;
 import de.leontheking24.discordbot.Moderation.ELeetSpeak;
 import de.leontheking24.discordbot.Moderation.Likeness;
 import de.leontheking24.discordbot.ServerManager;
@@ -9,6 +10,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 public class Utils {
 
@@ -111,8 +113,8 @@ public class Utils {
                     return true;
                 }
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            DiscordBot.getLogger().log(Level.WARNING, throwable.getMessage());
         }
         return false;
     }

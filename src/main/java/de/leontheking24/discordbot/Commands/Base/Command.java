@@ -88,12 +88,12 @@ public class Command implements ICommandExecute {
             sqlManager.countUp(trigger);
             messageContext = messageContext.replace("{Counter}", String.valueOf(sqlManager.getCounter(trigger)));
         }
-        if(value.contains("{Name}")) {
+        if(value.contains("{Player}")) {
             String replacedPlayer = message.getMember().getEffectiveName();
             if(message.getMentionedMembers().size() > 0) {
                 replacedPlayer = message.getMentionedMembers().get(0).getEffectiveName();
             }
-            messageContext = messageContext.replace("{Name}", replacedPlayer);
+            messageContext = messageContext.replace("{Player}", replacedPlayer);
         }
         channel.sendMessage(messageContext).queue();
     }

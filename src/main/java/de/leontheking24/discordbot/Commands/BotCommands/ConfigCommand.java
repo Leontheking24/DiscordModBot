@@ -56,7 +56,7 @@ public class ConfigCommand extends Command {
     private MessageEmbed helpOverview() {
         EmbedBuilder help = new EmbedBuilder();
         help.setTitle(serverManager.getMessage("config_help_title")).setColor(Color.MAGENTA);
-        help.setDescription(serverManager.getMessage("config_help_description"));
+        help.setDescription(serverManager.getMessage("config_help_description").replace("{prefix}", serverManager.getBotCommandPrefix()));
         help.addField(serverManager.getMessage("config_help_set"), "> " + serverManager.getBotCommandPrefix() + trigger + " set <Key> <Value>", false);
         help.addField(serverManager.getMessage("config_help_get"), "> " + serverManager.getBotCommandPrefix() + trigger + " get <Key>", false);
         help.addField(serverManager.getMessage("config_help_file"), "> " + serverManager.getBotCommandPrefix() + trigger + " file", false);
