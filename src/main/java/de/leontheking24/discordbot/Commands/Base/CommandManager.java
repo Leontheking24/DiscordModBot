@@ -16,6 +16,10 @@ public class CommandManager {
         commandList = new TreeMap<>();
     }
 
+    public String getSeparateKey() {
+        return serverManager.getConfigManager().getConfig("createCommandSeparateKey");
+    }
+
     public void addCommand(Command command) {
         commandList.put(command.getTrigger().toUpperCase(), command);
     }

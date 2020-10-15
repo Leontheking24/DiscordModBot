@@ -27,7 +27,7 @@ public class AddCommand extends Command {
     @Override
     public void executeCommand(TextChannel channel, Message message) {
         if(!isArgumentLengthZero(message)) {
-            String[] arguments = message.getContentRaw().substring(serverManager.getBotCommandPrefix().length() + trigger.length() + 1).split("\n");
+            String[] arguments = message.getContentRaw().substring(serverManager.getBotCommandPrefix().length() + trigger.length() + 1).split(commandManager.getSeparateKey());
 
             if(arguments.length >= 3) {
                 String trigger = arguments[0];
@@ -51,6 +51,6 @@ public class AddCommand extends Command {
             }
         }
         channel.sendMessage(utils.createEmbed(serverManager.getMessage("addcommand_syntax_title"), Color.RED,
-                serverManager.getMessage("addcommand_syntax_message").replace("{prefix}", serverManager.getBotCommandPrefix()).replace("{trigger}", trigger))).queue();
+                serverManager.getMessage("addcommand_syntax_message").replace("{prefix}", serverManager.getBotCommandPrefix()).replace("{trigger}", trigger).replace("{separate}", commandManager.getSeparateKey()))).queue();
     }
 }

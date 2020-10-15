@@ -15,6 +15,7 @@ public class DefaultConfig {
     public static boolean enableUserCommands=true;
     public static boolean enablePollCommand=true;
     public static boolean enableReactRoleCommand=true;
+    public static String createCommandSeparateKey="\\n";
 
     //Moderation-Config
     public static boolean enableCapsProtection=true;

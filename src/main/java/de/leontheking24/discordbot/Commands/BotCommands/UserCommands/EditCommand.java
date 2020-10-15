@@ -28,7 +28,7 @@ public class EditCommand extends Command {
     @Override
     public void executeCommand(TextChannel channel, Message message) {
         if(!isArgumentLengthZero(message)) {
-            String[] arguments = message.getContentRaw().substring(serverManager.getBotCommandPrefix().length() + trigger.length() + 1).split("\n");
+            String[] arguments = message.getContentRaw().substring(serverManager.getBotCommandPrefix().length() + trigger.length() + 1).split(commandManager.getSeparateKey());
             if(arguments.length >= 3) {
                 String trigger = arguments[0];
                 if(commandManager.isCommandExists(trigger)) {
@@ -55,6 +55,6 @@ public class EditCommand extends Command {
                 return;
             }
         }
-        channel.sendMessage(utils.createEmbed(serverManager.getMessage("editcommand_syntax_title"), Color.RED, serverManager.getMessage("editcommand_syntax_body").replace("{prefix}", serverManager.getBotCommandPrefix()).replace("{trigger}", trigger))).queue();
+        channel.sendMessage(utils.createEmbed(serverManager.getMessage("editcommand_syntax_title"), Color.RED, serverManager.getMessage("editcommand_syntax_body").replace("{prefix}", serverManager.getBotCommandPrefix()).replace("{trigger}", trigger).replace("{separate}", commandManager.getSeparateKey()))).queue();
     }
 }
