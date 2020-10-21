@@ -34,7 +34,7 @@ public class CheckBlacklist extends ListenerAdapter {
                 }
             } else if(Boolean.parseBoolean(serverManager.getConfigManager().getConfig("enableBlacklist"))) {
                 BlacklistManager blacklistManager = serverManager.getModManager();
-                if(!(serverManager.getPermissionManager().playerHasPermission(author.getIdLong(), "events.blacklist.ignore"))) {
+                if(serverManager.getPermissionManager().playerHasPermission(author.getIdLong(), "events.blacklist.ignore")) {
                     if(!message.getContentRaw().startsWith(serverManager.getBotCommandPrefix() + "blacklist")) {
                         String[] messageParts = message.getContentRaw().split(" ");
                         boolean hasBadWord = false;

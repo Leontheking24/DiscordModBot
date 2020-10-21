@@ -31,7 +31,7 @@ public class SpamSecure extends ListenerAdapter {
 
             if(Boolean.parseBoolean(serverManager.getConfigManager().getConfig("enableSpamProtection"))) {
                 Member member = event.getMember();
-                if(!(serverManager.getPermissionManager().playerHasPermission(member.getIdLong(), "events.spam.ignore"))) {
+                if(serverManager.getPermissionManager().playerHasPermission(member.getIdLong(), "events.spam.ignore")) {
                     if(!member.getUser().isBot()) {
                         if(spamManager.isMemberDetective(member)) {
                             try {

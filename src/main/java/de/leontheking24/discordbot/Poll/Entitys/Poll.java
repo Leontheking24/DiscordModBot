@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.entities.*;
 import java.awt.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 
 public class Poll {
@@ -81,7 +82,7 @@ public class Poll {
         return endDate;
     }
 
-    public void initToDatebase() {
+    public void initToDatabase() {
         pollManager.addPoll(this);
         if(hasEndDate()) {
             serverManager.getPollSqlManager().insertPoll(messageId, sendChannelId, reactions, endDate);
@@ -102,23 +103,23 @@ public class Poll {
         embedMessage.setColor(Color.MAGENTA);
         embedMessage.setTitle(serverManager.getMessage("poll_finished_title"));
 
-        Message message = DiscordBot.getJda().getTextChannelById(sendChannelId).retrieveMessageById(messageId).complete();
+        Message message = Objects.requireNonNull(DiscordBot.getJda().getTextChannelById(sendChannelId)).retrieveMessageById(messageId).complete();
         List<MessageReaction> reactions = message.getReactions();
         List<MessageEmbed.Field> fields = message.getEmbeds().get(0).getFields();
         int mostVotes = 0;
 
         for(int i = 0; i < fields.size(); i++) {
-            embedMessage.addField(emotes[i+1] + " " + fields.get(i).getValue().substring(2), " " + reactions.get(i).getCount(), false);
+            embedMessage.addField(emotes[i+1] + " > " + Objects.requireNonNull(fields.get(i).getValue()).substring(2), "> " + reactions.get(i).getCount(), false);
             if(reactions.get(i).getCount() > reactions.get(mostVotes).getCount()) {
                 mostVotes = i;
             }
         }
-        embedMessage.setDescription(serverManager.getMessage("poll_finished_message").replace("{Emoji}", emotes[mostVotes+1]).replace("{Winner}", fields.get(mostVotes).getValue().substring(2)));
-        DiscordBot.jda.getTextChannelById(sendChannelId).sendMessage(embedMessage.build()).queue();
+        embedMessage.setDescription(serverManager.getMessage("poll_finished_message").replace("{Emoji}", emotes[mostVotes+1]).replace("{Winner}", Objects.requireNonNull(fields.get(mostVotes).getValue()).substring(2)));
+        Objects.requireNonNull(DiscordBot.jda.getTextChannelById(sendChannelId)).sendMessage(embedMessage.build()).queue();
         remove();
 
         if(pollManager.willPollDeleteAfterFinish()) {
-            DiscordBot.jda.getTextChannelById(sendChannelId).retrieveMessageById(messageId).complete().delete().queue();
+            Objects.requireNonNull(DiscordBot.jda.getTextChannelById(sendChannelId)).retrieveMessageById(messageId).complete().delete().queue();
         }
     }
 

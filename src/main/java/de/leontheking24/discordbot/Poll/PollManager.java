@@ -73,7 +73,7 @@ public class PollManager {
 
         for(Poll poll : pollList.values()) {
             if(!sqlManager.isPollExists(poll.getMessageId())) {
-                poll.initToDatebase();
+                poll.initToDatabase();
             }
         }
     }

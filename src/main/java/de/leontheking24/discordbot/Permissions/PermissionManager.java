@@ -120,7 +120,6 @@ public class PermissionManager {
         ResultSet resultSet = mySql.executeWithResult("SELECT EXISTS(SELECT 1 FROM PlayerPermissions WHERE playerId='" + playerId + "' AND permission='" + permission.toLowerCase() + "' LIMIT 1) " +
                 "AS PlayerHasPermission");
         return utils.isResultTrue(resultSet, "PlayerHasPermission");
-
     }
 
     public List<String> getAllGroupPermissions(long groupId) {
