@@ -1,2 +1,2 @@
-Custom-Attribute: Here is some custom value
-Custom-Attribute-2: Here is some custom value
+Manifest-Version: 1.0
+Main-Class: de.leontheking24.discordbot.DiscordBot
