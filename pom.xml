@@ -7,10 +7,11 @@
     <groupId>DiscordBot</groupId>
     <artifactId>DiscordBot</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <jdk.version>1.8</jdk.version>
     </properties>
+    <name>DiscordBot</name>
 
     <dependencies>
         <dependency>
@@ -39,16 +40,21 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
                     <archive>
-                        <manifestFile>src/main/resources/MANIFEST.MF</manifestFile>
                         <manifest>
-                            <addClasspath>true</addClasspath>
+                            <mainClass>de.leontheking24.discordbot.DiscordBot</mainClass>
                         </manifest>
-                        <manifestEntries>
-                            <Built-By>Leontheking24</Built-By>
-                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>

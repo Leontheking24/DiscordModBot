@@ -246,7 +246,6 @@ public class ServerManager {
         return fileGenerator;
     }
 
-
     public Guild getGuild() {
         for(Guild guild : DiscordBot.getJda().getGuilds()) {
             if(guild.getIdLong() == serverId) {
@@ -274,6 +273,14 @@ public class ServerManager {
 
     public TextChannel getNotificationChannel() {
         TextChannel channel = DiscordBot.getJda().getTextChannelById(configManager.getConfig("notificationChannel"));
+        if(channel != null) {
+            return channel;
+        }
+        return getGuild().getDefaultChannel();
+    }
+
+    public TextChannel getGreetingChannel() {
+        TextChannel channel = DiscordBot.getJda().getTextChannelById(configManager.getConfig("greetingChannel"));
         if(channel != null) {
             return channel;
         }

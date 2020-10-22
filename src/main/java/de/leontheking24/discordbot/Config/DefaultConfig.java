@@ -34,6 +34,13 @@ public class DefaultConfig {
     public static String pollSeparateKey=";";
     public static boolean deletePollAfterFinish=false;
 
+    //Greeting-Config
+    public static long greetingChannel=123456789876543212l;
+    public static boolean enableJoinMessage=false;
+    public static boolean enableLeaveMessage=false;
+    public static String customJoinMessage="";
+    public static String customLeaveMessage="";
+
     //Database-Config
     public static boolean isUsingOwnDatabase=false;
     public static String databaseDriver="";
