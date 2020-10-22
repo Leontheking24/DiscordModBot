@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class GreetingListener extends ListenerAdapter {
 
     @Override
@@ -28,7 +30,7 @@ public class GreetingListener extends ListenerAdapter {
         if(Boolean.parseBoolean(serverManager.getConfigManager().getConfig("enableLeaveMessage"))) {
             String message = serverManager.getMessage("leaveMessage").replace("{Player}", event.getUser().getName());
             if(serverManager.getConfigManager().getConfig("customLeaveMessage").trim().length() > 0) {
-                message = serverManager.getConfigManager().getConfig("customLeaveMessage").replace("{Player}", event.getMember().getAsMention());
+                message = serverManager.getConfigManager().getConfig("customLeaveMessage").replace("{Player}", Objects.requireNonNull(event.getMember()).getAsMention());
             }
             serverManager.getGreetingChannel().sendMessage(message).queue();
         }

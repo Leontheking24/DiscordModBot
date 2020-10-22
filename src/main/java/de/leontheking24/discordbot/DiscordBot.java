@@ -27,7 +27,6 @@ public class DiscordBot {
 
     public static JDA jda;
     public static String version = "1.0.0";
-    public static SelfUser bot;
 
     private static Logger logger;
     private static ServerLists serverLists;
@@ -46,7 +45,6 @@ public class DiscordBot {
         String token = "NzUwMzcxOTMzMDMxMjM1NzQ2.X05kUg.RcH5hJiT7BaiJAk1eXy7akP276A";
         jda = new JDABuilder(AccountType.BOT).setToken(token).build();
         jda.addEventListener(new DiscordJoin());
-        bot = jda.getSelfUser();
         logger = Logger.getLogger("DiscordBot");
         databaseGlobalConfig = new DatabaseGlobalConfig();
         languageManager = new LanguageManager();
@@ -139,7 +137,7 @@ public class DiscordBot {
     }
 
     public static SelfUser getBot() {
-        return bot;
+        return jda.getSelfUser();
     }
 
     //embedBuilder.setAuthor(bot.getName(), bot.getEffectiveAvatarUrl(), bot.getEffectiveAvatarUrl());
