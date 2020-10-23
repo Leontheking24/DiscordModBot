@@ -5,6 +5,8 @@ import de.leontheking24.discordbot.Commands.BotCommands.RoleAssignment.ReactionL
 import de.leontheking24.discordbot.Database.Config.DatabaseGlobalConfig;
 import de.leontheking24.discordbot.Greeting.GreetingListener;
 import de.leontheking24.discordbot.LanguageManager.LanguageManager;
+import de.leontheking24.discordbot.Logger.DefaultLogger;
+import de.leontheking24.discordbot.Logger.Logger;
 import de.leontheking24.discordbot.Moderation.Listener.*;
 import de.leontheking24.discordbot.Poll.PollEventListener;
 import de.leontheking24.discordbot.Utils.MemoryManager;
@@ -21,7 +23,6 @@ import javax.security.auth.login.LoginException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DiscordBot {
 
@@ -45,7 +46,7 @@ public class DiscordBot {
         String token = "NzUwMzcxOTMzMDMxMjM1NzQ2.X05kUg.RcH5hJiT7BaiJAk1eXy7akP276A";
         jda = new JDABuilder(AccountType.BOT).setToken(token).build();
         jda.addEventListener(new DiscordJoin());
-        logger = Logger.getLogger("DiscordBot");
+        logger = new DefaultLogger();
         databaseGlobalConfig = new DatabaseGlobalConfig();
         languageManager = new LanguageManager();
         serverLists = new ServerLists();

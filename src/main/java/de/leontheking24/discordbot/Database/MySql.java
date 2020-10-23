@@ -2,8 +2,10 @@ package de.leontheking24.discordbot.Database;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import de.leontheking24.discordbot.Database.Config.DatabaseConfig;
+import de.leontheking24.discordbot.DiscordBot;
 
 import java.sql.*;
+import java.util.logging.Level;
 
 public class MySql {
 
@@ -32,12 +34,10 @@ public class MySql {
             dataSource.setUser(config.getUsername());
             dataSource.setPassword(config.getPassword());
 
-            System.out.println(dataSource.getServerName());
-
             connection = dataSource.getConnection();
 
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
         }
         return connection;
     }
