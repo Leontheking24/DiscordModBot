@@ -32,6 +32,8 @@ public class MySql {
             dataSource.setUser(config.getUsername());
             dataSource.setPassword(config.getPassword());
 
+            System.out.println(dataSource.getServerName());
+
             connection = dataSource.getConnection();
 
         } catch (ClassNotFoundException | SQLException e) {
