@@ -23,7 +23,6 @@ public class HelpCommand extends Command {
     @Override
     public void executeCommand(TextChannel channel, Message message) {
         EmbedBuilder info = new EmbedBuilder();
-        //info.setTitle(serverManager.getMessage("help_title"));
         info.setColor(0xD631B5);
         info.addField(serverManager.getMessage("help_command_title"), serverManager.getMessage("help_command_body"), false);
         info.addField(serverManager.getMessage("help_config_title"), serverManager.getMessage("help_config_body"), false);

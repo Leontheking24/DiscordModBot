@@ -20,6 +20,7 @@ public class AddCommand extends Command {
 
     public AddCommand(ServerManager serverManager) {
         super(serverManager, trigger, serverManager.getMessage("addcommand_description"), "command.addCommand", CommandType.Bot);
+        super.setInfo(serverManager.getMessage("addcommand_info"));
         this.serverManager = serverManager;
         commandManager = serverManager.getCommandManager();
     }

@@ -20,7 +20,7 @@ public class CommandSqlManager {
     public CommandSqlManager(ServerManager serverManager) {
         this.serverManager = serverManager;
         this.mySql = serverManager.getMySql();
-        mySql.execute("CREATE TABLE IF NOT EXISTS Commands(trigger_word VARCHAR(100) NOT NULL PRIMARY KEY, value VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, permission VARCHAR(50), type VARCHAR(30) NOT NULL)");
+        mySql.execute("CREATE TABLE IF NOT EXISTS Commands(trigger_word VARCHAR(100) NOT NULL PRIMARY KEY, value VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, permission VARCHAR(50), info VARCHAR(2000), type VARCHAR(30) NOT NULL)");
         mySql.execute("CREATE TABLE IF NOT EXISTS Counter(name VARCHAR(100) NOT NULL PRIMARY KEY, value INTEGER)");
     }
 
@@ -31,6 +31,9 @@ public class CommandSqlManager {
                     + command.getCommandType() + "')");
             if(command.hasPermission()) {
                 mySql.execute("INSERT INTO Commands (permission) VALUES ('" + command.getPermission().toLowerCase() + "') WHERE trigger_word='" + command.getTrigger() + "'");
+            }
+            if(command.hasInfo()) {
+                mySql.execute("INSERT INTO Commands (info) VALUES ('" + command.getInfo() + "') WHERE trigger_word='" + command.getInfo() + "'");
             }
             if(command.getValue().contains("{Counter}")) {
                 mySql.execute("INSERT INTO Counter (name, value) VALUES ('" + command.getTrigger() + "', 0)");
@@ -78,6 +81,9 @@ public class CommandSqlManager {
                 commandList.add(command);
                 if(result.getString("permission") != null) {
                     command.setPermission(result.getString("permission"));
+                }
+                if(result.getString("info") != null) {
+                    command.setInfo(result.getString("info"));
                 }
                 serverManager.getCommandManager().addCommand(command);
             }

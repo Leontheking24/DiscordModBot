@@ -21,7 +21,6 @@ public class MuteCommand extends Command {
     public MuteCommand(ServerManager serverManager) {
         super(serverManager, trigger, serverManager.getMessage("mute_description"), "command.mute", CommandType.Bot);
         this.serverManager = serverManager;
-
     }
 
     @Override

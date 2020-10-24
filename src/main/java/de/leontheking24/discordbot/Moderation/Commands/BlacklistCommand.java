@@ -22,6 +22,7 @@ public class BlacklistCommand extends Command {
 
     public BlacklistCommand(ServerManager serverManager) {
         super(serverManager, trigger, serverManager.getMessage("blacklist_description"), "command.blacklist", CommandType.Bot);
+        super.setInfo(serverManager.getMessage("blacklist_info"));
         this.serverManager = serverManager;
         blacklistManager = serverManager.getModManager();
     }
@@ -38,7 +39,7 @@ public class BlacklistCommand extends Command {
         } else if(args[1].equalsIgnoreCase("remove")) {
             remove(channel, args);
 
-        } else if(args[1].equalsIgnoreCase("show")) {
+        } else if(args[1].equalsIgnoreCase("show") || args[1].equalsIgnoreCase("get")) {
             list(channel);
 
         } else {

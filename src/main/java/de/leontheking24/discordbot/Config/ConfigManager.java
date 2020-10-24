@@ -162,7 +162,7 @@ public class ConfigManager {
     }
 
     public void loadConfig() {
-        ResultSet resultSet = serverManager.getMySql().executeWithResult("SELECT * FROM Config");
+        ResultSet resultSet = serverManager.getMySql().executeWithResult("SELECT * FROM Config ORDER BY configKey ASC");
         try {
             while (resultSet.next()) {
                 serverManager.getConfigManager().addConfig(resultSet.getString("configKey"), resultSet.getString("configValue"), resultSet.getString("configDataTypeClass"));

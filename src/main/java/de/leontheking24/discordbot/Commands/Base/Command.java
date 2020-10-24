@@ -12,6 +12,7 @@ public class Command implements ICommandExecute {
     private String value;
     private String description;
     private String permission;
+    private String info;
     private final CommandType commandType;
 
     public Command(ServerManager serverManager, String trigger, String value, String description, String permission, CommandType commandType) {
@@ -53,12 +54,20 @@ public class Command implements ICommandExecute {
         this.description = description;
     }
 
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     public boolean hasValue() {
         return value != null;
     }
 
     public boolean hasPermission() {
         return permission != null;
+    }
+
+    public boolean hasInfo() {
+        return info != null;
     }
 
     public String getTrigger() {
@@ -79,6 +88,10 @@ public class Command implements ICommandExecute {
 
     public CommandType getCommandType() {
         return commandType;
+    }
+
+    public String getInfo() {
+        return info;
     }
 
     @Override

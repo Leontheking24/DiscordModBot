@@ -26,6 +26,7 @@ public class ConfigCommand extends Command {
 
     public ConfigCommand(ServerManager serverManager) {
         super(serverManager, trigger, serverManager.getMessage("config_description"), "command.config", CommandType.Bot);
+        super.setInfo(serverManager.getMessage("config_info"));
         this.serverManager = serverManager;
         this.configManager = serverManager.getConfigManager();
     }

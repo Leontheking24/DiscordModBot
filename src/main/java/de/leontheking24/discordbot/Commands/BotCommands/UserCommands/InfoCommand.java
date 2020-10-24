@@ -46,6 +46,9 @@ public class InfoCommand extends Command {
                     }
                     info.addField(serverManager.getMessage("info_message_cmd_permission"), permission, true);
                     info.addField(serverManager.getMessage("info_message_cmd_type"), command.getCommandType().name(), true);
+                    if(command.hasInfo()) {
+                        info.addField(serverManager.getMessage("info_message_cmd_info"), command.getInfo(), false);
+                    }
                     info.setFooter(serverManager.getMessage("info_message_cmd_from"));
                     info.setTimestamp(new Date().toInstant());
                     channel.sendMessage(info.build()).queue();
