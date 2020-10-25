@@ -18,8 +18,12 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.SelfUser;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import javax.security.auth.login.LoginException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -27,7 +31,15 @@ import java.util.logging.Level;
 public class DiscordBot {
 
     public static JDA jda;
-    public static String version = "1.0.0";
+    public static String version;
+
+    static {
+        try {
+            version = new MavenXpp3Reader().read(new FileReader("pom.xml")).getVersion();
+        } catch (IOException | XmlPullParserException e) {
+            java.util.logging.Logger.getLogger("DiscordBot").log(Level.WARNING, e.getMessage());
+        }
+    }
 
     private static Logger logger;
     private static ServerLists serverLists;
@@ -140,6 +152,4 @@ public class DiscordBot {
     public static SelfUser getBot() {
         return jda.getSelfUser();
     }
-
-    //embedBuilder.setAuthor(bot.getName(), bot.getEffectiveAvatarUrl(), bot.getEffectiveAvatarUrl());
 }

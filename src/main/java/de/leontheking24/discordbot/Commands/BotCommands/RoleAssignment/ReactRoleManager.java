@@ -1,11 +1,13 @@
 package de.leontheking24.discordbot.Commands.BotCommands.RoleAssignment;
 
 import de.leontheking24.discordbot.Database.MySql;
+import de.leontheking24.discordbot.DiscordBot;
 import de.leontheking24.discordbot.ServerManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class ReactRoleManager {
 
@@ -47,7 +49,7 @@ public class ReactRoleManager {
             while (resultSet.next())
                 return resultSet.getLong("roleID");
         } catch (SQLException e) {
-            e.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
         }
         return 0;
     }
@@ -60,7 +62,7 @@ public class ReactRoleManager {
                 resultList.add(resultSet.getString("reaction"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
         }
         return resultList;
     }
@@ -71,7 +73,7 @@ public class ReactRoleManager {
             while (resultSet.next())
                 return Boolean.valueOf(resultSet.getString("removable"));
         } catch (SQLException e) {
-            e.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
         }
         return false;
     }
@@ -85,7 +87,7 @@ public class ReactRoleManager {
                         resultSet.getString("reaction"), resultSet.getBoolean("removable")));
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, throwables.getMessage());
         }
     }
 

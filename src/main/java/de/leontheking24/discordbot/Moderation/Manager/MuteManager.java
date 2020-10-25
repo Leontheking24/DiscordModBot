@@ -66,7 +66,7 @@ public class MuteManager {
 
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, throwables.getMessage());
         }
     }
 

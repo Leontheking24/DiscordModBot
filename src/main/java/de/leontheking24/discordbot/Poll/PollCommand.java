@@ -113,11 +113,11 @@ public class PollCommand extends Command {
 
                 pollChannelSearch.getSendChannel().retrieveMessageById(pollMessageSearch.getMessageId()).complete().delete().queue();
                 pollChannelSearch.getSendChannel().sendMessage(pollEmbed.build()).queue(botMessage -> createPoll(botMessage, pollChannelSearch.getSendChannel(), finalIsEndSet, finalSelectCount, endDate));
-                //message.delete().queue();
+                message.delete().queue();
                 return;
             }
             pollChannelSearch.getSendChannel().sendMessage(pollEmbed.build()).queue(botMessage -> createPoll(botMessage, pollChannelSearch.getSendChannel(), finalIsEndSet, finalSelectCount, endDate));
-            //message.delete().queue();
+            message.delete().queue();
             return;
         }
         channel.sendMessage(utils.createEmbed(serverManager.getMessage("poll_start_syntax_title"), Color.RED, serverManager.getMessage("poll_start_syntax_body")

@@ -11,6 +11,7 @@ import java.lang.reflect.Modifier;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
 
 public class ConfigManager {
 
@@ -72,7 +73,7 @@ public class ConfigManager {
                     Object value = field.get(type);
                     initConfig(key, value.toString(), getValueClass(type));
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
                 }
             }
         }
@@ -168,7 +169,7 @@ public class ConfigManager {
                 serverManager.getConfigManager().addConfig(resultSet.getString("configKey"), resultSet.getString("configValue"), resultSet.getString("configDataTypeClass"));
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, throwables.getMessage());
         }
     }
 

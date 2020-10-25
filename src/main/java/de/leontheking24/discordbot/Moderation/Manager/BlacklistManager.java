@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class BlacklistManager {
 
@@ -50,7 +51,7 @@ public class BlacklistManager {
                 blacklist.add(resultSet.getString("value"));
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, throwables.getMessage());
         }
     }
 

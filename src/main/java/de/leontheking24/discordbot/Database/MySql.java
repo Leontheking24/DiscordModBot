@@ -19,7 +19,7 @@ public class MySql {
         try {
             statement = connection.createStatement();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, throwables.getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ public class MySql {
         try {
             statement.execute(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
         }
     }
 
@@ -72,7 +72,7 @@ public class MySql {
         try {
             return statement.executeQuery(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
         }
         return null;
     }

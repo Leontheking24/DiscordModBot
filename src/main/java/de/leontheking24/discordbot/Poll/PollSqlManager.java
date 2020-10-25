@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 
 public class PollSqlManager {
 
@@ -76,7 +77,7 @@ public class PollSqlManager {
             }
 
         } catch (SQLException | ParseException e) {
-            e.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
         }
 
         for(Poll poll : pollManager.getPollList().values()) {
@@ -88,7 +89,7 @@ public class PollSqlManager {
                     poll.setReactions(reactions);
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
             }
         }
     }

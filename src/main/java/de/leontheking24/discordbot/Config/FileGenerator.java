@@ -1,9 +1,11 @@
 package de.leontheking24.discordbot.Config;
 
+import de.leontheking24.discordbot.DiscordBot;
 import de.leontheking24.discordbot.ServerManager;
 
 import java.io.*;
 import java.util.Properties;
+import java.util.logging.Level;
 
 public class FileGenerator {
 
@@ -30,7 +32,7 @@ public class FileGenerator {
             toWrite.store(outputStream, null);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
         }
         return file;
     }

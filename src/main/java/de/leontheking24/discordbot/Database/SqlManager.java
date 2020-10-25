@@ -7,6 +7,7 @@ import de.leontheking24.discordbot.Utils.Utils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 public class SqlManager {
 
@@ -37,7 +38,7 @@ public class SqlManager {
                 }
 
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                DiscordBot.getLogger().log(Level.WARNING, throwables.getMessage());
             }
         } else {
             mySql.execute("INSERT INTO Config (serverId, databaseDriver, databaseServer, databasePort, databaseName, databaseUsername, databasePassword) VALUES " +

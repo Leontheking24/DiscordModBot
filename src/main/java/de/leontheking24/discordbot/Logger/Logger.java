@@ -1,5 +1,7 @@
 package de.leontheking24.discordbot.Logger;
 
+import de.leontheking24.discordbot.DiscordBot;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,7 +38,7 @@ public class Logger {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
             }
         }
         return file;
@@ -46,7 +48,7 @@ public class Logger {
         try {
             Files.write(Paths.get(getFile(date).toURI()), ("[" + level.getName() + "] (" + timeFormat.format(date) + "): " + message + "\n").getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
-            e.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
         }
     }
 

@@ -61,7 +61,7 @@ public class CommandSqlManager {
                 return resultSet.getInt("value");
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, throwables.getMessage());
         }
         mySql.execute("INSERT INTO Counter (name, value) VALUES ('" + counterName + "', 1)");
         return 1;

@@ -107,7 +107,7 @@ public class PermissionManager {
                 permissions.add(resultSet.getString("permission"));
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, throwables.getMessage());
         }
         return permissions;
     }
@@ -130,7 +130,7 @@ public class PermissionManager {
                 permissions.add(resultSet.getString("permission"));
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, throwables.getMessage());
         }
         return permissions;
     }
@@ -179,7 +179,7 @@ public class PermissionManager {
                 groupPermissions.put(groupId, permissions);
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, throwables.getMessage());
         }
     }
 

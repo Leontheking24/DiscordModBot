@@ -1,9 +1,12 @@
 package de.leontheking24.discordbot.Poll.Entitys;
 
+import de.leontheking24.discordbot.DiscordBot;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.logging.Level;
 
 public class PollDateSearch {
 
@@ -14,7 +17,7 @@ public class PollDateSearch {
         try {
             this.date = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY).parse(date);
         } catch (ParseException e) {
-            e.printStackTrace();
+            DiscordBot.getLogger().log(Level.WARNING, e.getMessage());
         }
         this.replaceArgs = replaceArgs;
     }
