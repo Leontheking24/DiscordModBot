@@ -11,7 +11,6 @@ import de.leontheking24.discordbot.Moderation.Listener.*;
 import de.leontheking24.discordbot.Poll.PollEventListener;
 import de.leontheking24.discordbot.Utils.MemoryManager;
 import de.leontheking24.discordbot.Utils.Utils;
-import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -49,15 +48,13 @@ public class DiscordBot {
     private static DatabaseGlobalConfig databaseGlobalConfig;
     private static LanguageManager languageManager;
 
-    public static void main(String[] args) throws LoginException {
+    public static void main(String[] args) throws LoginException, InterruptedException {
         new DiscordBot();
         new LanguageManager();
     }
 
-    public DiscordBot() throws LoginException {
-        String token = "NzUwMzcxOTMzMDMxMjM1NzQ2.X05kUg.RcH5hJiT7BaiJAk1eXy7akP276A";
-        jda = new JDABuilder(AccountType.BOT).setToken(token).build();
-        jda.addEventListener(new DiscordJoin());
+    public DiscordBot() throws LoginException, InterruptedException {
+        jda = JDABuilder.createDefault("NzUwMzcxOTMzMDMxMjM1NzQ2.X05kUg.RcH5hJiT7BaiJAk1eXy7akP276A").build();
         logger = new DefaultLogger();
         databaseGlobalConfig = new DatabaseGlobalConfig();
         languageManager = new LanguageManager();
@@ -68,9 +65,10 @@ public class DiscordBot {
         memoryManager.startMemoryScheduler();
     }
 
-    public void initServer() {
+    public void initServer() throws InterruptedException {
         jda.getPresence().setStatus(OnlineStatus.IDLE);
         jda.getPresence().setActivity(Activity.playing("Status: Initializing Servers"));
+        jda.awaitReady();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -94,7 +92,6 @@ public class DiscordBot {
                         cooldown = 0;
                     }
                 }
-
                 goOnline();
                 jda.getPresence().setStatus(OnlineStatus.ONLINE);
                 jda.getPresence().setActivity(Activity.playing("Status: Online"));
@@ -140,6 +137,7 @@ public class DiscordBot {
     }
 
     private static void initEvents() {
+        jda.addEventListener(new DiscordJoin());
         jda.addEventListener(new CommandListener());
         jda.addEventListener(new ReactionListener());
         jda.addEventListener(new CheckCapslock());

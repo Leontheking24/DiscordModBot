@@ -1,5 +1,6 @@
 package de.leontheking24.discordbot.Utils;
 
+import de.leontheking24.discordbot.DiscordBot;
 import de.leontheking24.discordbot.Logger.MemoryLogger;
 
 import java.text.DecimalFormat;

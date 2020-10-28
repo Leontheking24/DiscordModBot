@@ -11,6 +11,7 @@ public class DiscordJoin extends ListenerAdapter {
 
     @Override
     public void onGuildJoin(@NotNull GuildJoinEvent event) {
+        System.out.println("Hey");
         long id = event.getGuild().getIdLong();
         long ownerId = event.getGuild().getOwnerIdLong();
         DiscordBot.getServerLists().addServer(new ServerManager(id));
