@@ -121,6 +121,19 @@ public class ConfigManager {
         return configValues.containsKey(key);
     }
 
+    public String getNearestConfig(String key) {
+        String value = null;
+        int percentage = 0;
+        for(Object o: getConfigProperties().keySet()) {
+            int likeness = utils.checkLikeness(key.toCharArray(), String.valueOf(o).toCharArray());
+            if(likeness > percentage) {
+                value = String.valueOf(o);
+                percentage = likeness;
+            }
+        }
+        return value;
+    }
+
     public boolean isDatabaseConfigUsable() {
         String driver = getConfig("databaseDriver");
         String server = getConfig("databaseServer");

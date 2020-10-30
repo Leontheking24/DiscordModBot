@@ -1,6 +1,5 @@
 package de.leontheking24.discordbot.Utils;
 
-import de.leontheking24.discordbot.DiscordBot;
 import de.leontheking24.discordbot.Logger.MemoryLogger;
 
 import java.text.DecimalFormat;
@@ -14,6 +13,7 @@ public class MemoryManager {
     private final Runtime runtime;
     private final NumberFormat numberFormat = new DecimalFormat("#####,##0.0");
     private final MemoryLogger logger;
+    private int counter = 1;
 
     public MemoryManager() {
         runtime = Runtime.getRuntime();
@@ -26,9 +26,13 @@ public class MemoryManager {
             @Override
             public void run() {
                 System.gc();
-                logger.log(Level.INFO, "\nUsed memory space: " + getUsedMemory() + " MB (" + getUsedMemoryPercentage() + "%)" +
-                        "\nFree memory space: " + getFreeMemory() + " MB" +
-                        "\nTotal memory space: " + getTotalMemory() + " MB");
+                counter++;
+                if(counter >= 15) {
+                    logger.log(Level.INFO, "\nUsed memory space: " + getUsedMemory() + " MB (" + getUsedMemoryPercentage() + "%)" +
+                            "\nFree memory space: " + getFreeMemory() + " MB" +
+                            "\nTotal memory space: " + getTotalMemory() + " MB");
+                    counter=1;
+                }
             }
         }, 0, 1000*60);
     }

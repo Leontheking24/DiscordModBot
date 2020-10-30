@@ -55,6 +55,7 @@ public class DiscordBot {
 
     public DiscordBot() throws LoginException, InterruptedException {
         jda = JDABuilder.createDefault("NzUwMzcxOTMzMDMxMjM1NzQ2.X05kUg.RcH5hJiT7BaiJAk1eXy7akP276A").build();
+        //jda = JDABuilder.createDefault("NzY5OTY0ODkxMTQ2NDIwMjY2.X5Wrrw.UkiWTS0WTAQtoD9QKK1CuFcA07o").build();
         logger = new DefaultLogger();
         databaseGlobalConfig = new DatabaseGlobalConfig();
         languageManager = new LanguageManager();

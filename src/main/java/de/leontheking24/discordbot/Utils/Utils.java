@@ -59,6 +59,18 @@ public class Utils {
         return new Likeness(deviation >= deviationToReach, deviation);
     }
 
+    public int checkLikeness(char[] value1, char[] value2) {
+        int deviationsChars = 0;
+        for(int i = 0; i < value2.length; i++) {
+            if(i < value1.length && i >= 0) {
+                if(value1[i] == value2[i]) {
+                    deviationsChars++;
+                }
+            }
+        }
+        return (int) Math.round((double)deviationsChars*100/(double)value1.length);
+    }
+
     public boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;

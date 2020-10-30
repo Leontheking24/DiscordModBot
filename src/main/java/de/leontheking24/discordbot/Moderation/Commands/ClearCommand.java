@@ -48,8 +48,8 @@ public class ClearCommand extends Command {
 
                     } else {
                         deletedMessagesIgnorePlayer(channel, selectedChannels, amount);
-                        return;
                     }
+                    return;
                 } else {
                     channel.sendMessage(new EmbedBuilder().setTitle(serverManager.getMessage("clear_secure_title")).setColor(Color.RED).setDescription(serverManager.getMessage("clear_secure_body").replace("{max}",
                             serverManager.getConfigManager().getConfig("maximumClearAmount"))).build()).queue();
