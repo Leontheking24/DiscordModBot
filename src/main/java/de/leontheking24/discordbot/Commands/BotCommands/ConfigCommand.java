@@ -73,6 +73,7 @@ public class ConfigCommand extends Command {
                     configManager.updateConfig(args[1], args[2]);
                     channel.sendMessage(utils.createEmbed(serverManager.getMessage("config_set_success_title"), Color.GREEN,
                             serverManager.getMessage("config_set_success_body").replace("{key}", args[1]).replace("{value}", args[2]))).queue();
+                    return;
                 } else {
                     try {
                         channel.sendMessage(utils.createEmbed(serverManager.getMessage("config_set_wrongformat_title"), Color.RED,
@@ -85,7 +86,7 @@ public class ConfigCommand extends Command {
                 return;
             }
             channel.sendMessage(utils.createEmbed(serverManager.getMessage("config_set_notfound_title"), Color.RED,
-                    serverManager.getMessage("config_set_notfound_body").replace("{key}", args[1]))).queue();
+                    serverManager.getMessage("config_set_notfound_body").replace("{key}", args[1]).replace("{config}", configManager.getNearestConfig(args[1])))).queue();
             return;
         }
         channel.sendMessage(utils.createEmbed(serverManager.getMessage("config_set_syntax_title"), Color.RED,
@@ -108,7 +109,7 @@ public class ConfigCommand extends Command {
                 channel.sendMessage(configValue.build()).queue();
             } else {
                 channel.sendMessage(utils.createEmbed(serverManager.getMessage("config_get_notfound_title"), Color.RED,
-                        serverManager.getMessage("config_get_notfound_body").replace("{key}", args[1]))).queue();
+                        serverManager.getMessage("config_get_notfound_body").replace("{key}", args[1]).replace("{config}", configManager.getNearestConfig(args[1])))).queue();
             }
 
         } else {

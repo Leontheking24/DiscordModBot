@@ -47,7 +47,7 @@ public class CommandListener extends ListenerAdapter {
     }
 
     public Command getCommand(String[] args, String botPrefix, String userPrefix, String startBot, String startUser, String startMention) {
-        if(args[0].equals("<@!750371933031235746>") || args[0].startsWith(botPrefix) || args[0].startsWith(userPrefix)) {
+        if(args[0].equals("<@!" + DiscordBot.getBot().getId() + ">") || args[0].startsWith(botPrefix) || args[0].startsWith(userPrefix)) {
             if(startMention != null && commandManager.isCommandExists(startMention)) {
                 return commandManager.getCommand(startMention);
             } else if(commandManager.isCommandExists(startBot)) {
