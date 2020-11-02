@@ -13,6 +13,7 @@ public class GreetingListener extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+        System.out.println("test");
         ServerManager serverManager = DiscordBot.getServerManager(event.getGuild().getIdLong());
         if(Boolean.parseBoolean(serverManager.getConfigManager().getConfig("enableJoinMessage"))) {
             String message = serverManager.getMessage("joinMessage").replace("{Player}", event.getUser().getName());
