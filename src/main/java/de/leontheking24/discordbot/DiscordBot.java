@@ -17,6 +17,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.SelfUser;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
@@ -30,6 +31,7 @@ import java.util.logging.Level;
 public class DiscordBot {
 
     public static JDA jda;
+    public static JDABuilder builder;
     public static String version;
 
     static {
@@ -54,7 +56,9 @@ public class DiscordBot {
     }
 
     public DiscordBot() throws LoginException, InterruptedException {
-        jda = JDABuilder.createDefault("NzUwMzcxOTMzMDMxMjM1NzQ2.X05kUg.RcH5hJiT7BaiJAk1eXy7akP276A").build();
+        builder = JDABuilder.createDefault("NzUwMzcxOTMzMDMxMjM1NzQ2.X05kUg.RcH5hJiT7BaiJAk1eXy7akP276A");
+        builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
+        jda = builder.build();
         //jda = JDABuilder.createDefault("NzY5OTY0ODkxMTQ2NDIwMjY2.X5Wrrw.UkiWTS0WTAQtoD9QKK1CuFcA07o").build();
         logger = new DefaultLogger();
         databaseGlobalConfig = new DatabaseGlobalConfig();

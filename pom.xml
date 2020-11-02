@@ -6,7 +6,7 @@
 
     <groupId>de.leontheking24</groupId>
     <artifactId>DiscordBot</artifactId>
-    <version>1.1.4</version>
+    <version>1.1.5</version>
     <packaging>jar</packaging>
     <properties>
         <jdk.version>1.8</jdk.version>
