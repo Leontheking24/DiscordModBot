@@ -25,12 +25,8 @@ public class CommandListener extends ListenerAdapter {
             String userPrefix = serverManager.getUserCommandPrefix();
             String startBot = args[0].substring(botPrefix.length());
             String startUser = args[0].substring(userPrefix.length());
-            boolean startWithMention = false;
-            if(args.length > 1) {
-                startWithMention = args[0].equals("<@!" + DiscordBot.getBot().getId() + ">");
-            }
 
-            Command command = getCommand(args, botPrefix, userPrefix, startBot, startUser, startWithMention);
+            Command command = getCommand(args, botPrefix, userPrefix, startBot, startUser);
             if(command != null) {
                 if(command.hasPermission()) {
                     if(permissionManager.playerHasPermission(event.getAuthor().getIdLong(), command.getPermission())) {
@@ -46,11 +42,9 @@ public class CommandListener extends ListenerAdapter {
         }
     }
 
-    public Command getCommand(String[] args, String botPrefix, String userPrefix, String startBot, String startUser, boolean startWithMention) {
-        if(startWithMention || args[0].startsWith(botPrefix) || args[0].startsWith(userPrefix)) {
-            if(startWithMention && commandManager.isCommandExists(args[1])) {
-                return commandManager.getCommand(args[1]);
-            } else if(commandManager.isCommandExists(startBot)) {
+    public Command getCommand(String[] args, String botPrefix, String userPrefix, String startBot, String startUser) {
+        if(args[0].startsWith(botPrefix) || args[0].startsWith(userPrefix)) {
+            if(commandManager.isCommandExists(startBot)) {
                 return commandManager.getCommand(startBot);
             } else if(commandManager.isCommandExists(startUser)) {
                 return commandManager.getCommand(startUser);
