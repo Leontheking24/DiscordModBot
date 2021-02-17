@@ -25,12 +25,12 @@ public class CommandListener extends ListenerAdapter {
             String userPrefix = serverManager.getUserCommandPrefix();
             String startBot = args[0].substring(botPrefix.length());
             String startUser = args[0].substring(userPrefix.length());
-            String startMention = null;
+            boolean startWithMention = false;
             if(args.length > 1) {
-                startMention = args[1];
+                startWithMention = args[0].equals("<@!" + DiscordBot.getBot().getId() + ">");
             }
 
-            Command command = getCommand(args, botPrefix, userPrefix, startBot, startUser, startMention);
+            Command command = getCommand(args, botPrefix, userPrefix, startBot, startUser, startWithMention);
             if(command != null) {
                 if(command.hasPermission()) {
                     if(permissionManager.playerHasPermission(event.getAuthor().getIdLong(), command.getPermission())) {
@@ -46,10 +46,10 @@ public class CommandListener extends ListenerAdapter {
         }
     }
 
-    public Command getCommand(String[] args, String botPrefix, String userPrefix, String startBot, String startUser, String startMention) {
-        if(args[0].equals("<@!" + DiscordBot.getBot().getId() + ">") || args[0].startsWith(botPrefix) || args[0].startsWith(userPrefix)) {
-            if(startMention != null && commandManager.isCommandExists(startMention)) {
-                return commandManager.getCommand(startMention);
+    public Command getCommand(String[] args, String botPrefix, String userPrefix, String startBot, String startUser, boolean startWithMention) {
+        if(startWithMention || args[0].startsWith(botPrefix) || args[0].startsWith(userPrefix)) {
+            if(startWithMention && commandManager.isCommandExists(args[1])) {
+                return commandManager.getCommand(args[1]);
             } else if(commandManager.isCommandExists(startBot)) {
                 return commandManager.getCommand(startBot);
             } else if(commandManager.isCommandExists(startUser)) {

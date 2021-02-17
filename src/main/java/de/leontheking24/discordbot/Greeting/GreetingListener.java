@@ -5,14 +5,13 @@ import de.leontheking24.discordbot.ServerManager;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class GreetingListener extends ListenerAdapter {
 
     @Override
-    public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+    public void onGuildMemberJoin(GuildMemberJoinEvent event) {
         System.out.println("test");
         ServerManager serverManager = DiscordBot.getServerManager(event.getGuild().getIdLong());
         if(Boolean.parseBoolean(serverManager.getConfigManager().getConfig("enableJoinMessage"))) {
@@ -26,7 +25,7 @@ public class GreetingListener extends ListenerAdapter {
 
 
     @Override
-    public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
+    public void onGuildMemberRemove(GuildMemberRemoveEvent event) {
         ServerManager serverManager = DiscordBot.getServerManager(event.getGuild().getIdLong());
         if(Boolean.parseBoolean(serverManager.getConfigManager().getConfig("enableLeaveMessage"))) {
             String message = serverManager.getMessage("leaveMessage").replace("{Player}", event.getUser().getName());

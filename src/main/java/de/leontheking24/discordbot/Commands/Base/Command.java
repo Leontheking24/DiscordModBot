@@ -119,7 +119,6 @@ public class Command implements ICommandExecute {
 
     @Override
     public String[] getArguments(Message message) {
-        //return message.getContentRaw().substring(serverManager.getBotCommandPrefix().length() + trigger.length() +1).split(" ");
-        return message.getContentRaw().split(trigger)[1].substring(1).split(" ");
+        return message.getContentRaw().split(trigger.toLowerCase())[1].substring(1).split(" ");
     }
 }

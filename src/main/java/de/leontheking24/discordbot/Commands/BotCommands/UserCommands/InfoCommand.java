@@ -3,6 +3,7 @@ package de.leontheking24.discordbot.Commands.BotCommands.UserCommands;
 import de.leontheking24.discordbot.Commands.Base.Command;
 import de.leontheking24.discordbot.Commands.Base.CommandType;
 import de.leontheking24.discordbot.DiscordBot;
+import de.leontheking24.discordbot.Logger.Logger;
 import de.leontheking24.discordbot.ServerManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -10,6 +11,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.awt.*;
 import java.util.Date;
+import java.util.logging.Level;
 
 public class InfoCommand extends Command {
 

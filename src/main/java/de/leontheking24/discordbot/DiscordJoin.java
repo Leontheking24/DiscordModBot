@@ -3,14 +3,13 @@ package de.leontheking24.discordbot;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 
 public class DiscordJoin extends ListenerAdapter {
 
     @Override
-    public void onGuildJoin(@NotNull GuildJoinEvent event) {
+    public void onGuildJoin(GuildJoinEvent event) {
         System.out.println("Hey");
         long id = event.getGuild().getIdLong();
         long ownerId = event.getGuild().getOwnerIdLong();
@@ -27,7 +26,7 @@ public class DiscordJoin extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildLeave(@NotNull GuildLeaveEvent event) {
+    public void onGuildLeave(GuildLeaveEvent event) {
         DiscordBot.getServerLists().removeServer(event.getGuild().getIdLong());
         DiscordBot.getLogger().log(Level.INFO, "The Bot was removed from server " + event.getGuild().getId());
     }

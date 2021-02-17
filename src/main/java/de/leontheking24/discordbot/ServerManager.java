@@ -2,7 +2,6 @@ package de.leontheking24.discordbot;
 
 import de.leontheking24.discordbot.Commands.Base.CommandSqlManager;
 import de.leontheking24.discordbot.Commands.BotCommands.*;
-import de.leontheking24.discordbot.Commands.BotCommands.Permissions.UnpermitCommand;
 import de.leontheking24.discordbot.Commands.BotCommands.Permissions.UserInfoCommand;
 import de.leontheking24.discordbot.Commands.BotCommands.RoleAssignment.ReactRoleManager;
 import de.leontheking24.discordbot.Commands.BotCommands.UserCommands.AddCommand;
@@ -142,7 +141,6 @@ public class ServerManager {
         commandManager.addCommand(new ListCommand(this));
         commandManager.addCommand(new HelpCommand(this));
         commandManager.addCommand(new InfoCommand(this));
-        commandManager.addCommand(new UnpermitCommand(this));
         commandManager.addCommand(new UserInfoCommand(this));
         commandManager.addCommand(new PermitCommand(this));
         commandManager.addCommand(new ConfigCommand(this));

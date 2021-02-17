@@ -93,7 +93,7 @@ public class PollCommand extends Command {
                 if(args[i-1].startsWith(" ")) {
                     args[i-1] = args[i-1].substring(1);
                 }
-                pollEmbed.addField(serverManager.getMessage("poll_start_success_field") + " " + PollEmojis.getByDigit(i).getEmoji(),"> " + args[i-1], true);
+                //pollEmbed.addField(serverManager.getMessage("poll_start_success_field") + " " + PollEmojis.getByDigit(i).getEmoji(),"> " + args[i-1], true);
                 pollEmbed.setFooter(serverManager.getMessage("poll_start_success_no_time"));
             }
 
@@ -125,7 +125,7 @@ public class PollCommand extends Command {
     }
 
     public void createPoll(Message message, TextChannel channel, boolean finalIsEndSet, int finalSelectCount, Date endDate) {
-        List<String> reactions = new ArrayList<>();
+        /*List<String> reactions = new ArrayList<>();
         for(int i = 1; i <= finalSelectCount; i++) {
             PollEmojis emojis = PollEmojis.getByDigit(i);
             message.addReaction(emojis.getUnicode()).queue();
@@ -135,7 +135,7 @@ public class PollCommand extends Command {
         if(finalIsEndSet) {
             poll.setEndDate(endDate);
         }
-        poll.initToDatabase();
+        poll.initToDatabase();*/
     }
 
     public EmbedBuilder help() {

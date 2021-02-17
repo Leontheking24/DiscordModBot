@@ -66,6 +66,10 @@ public class ListCommand extends Command {
         int start = (page-1)*cmdsPerSide;
         int end = page*cmdsPerSide;
         boolean startWithBot = false;
+        boolean first = true;
+        String names = "";
+        String values = "";
+        String descriptions = "";
 
         if(end > commandList.size()) {
             end = commandList.size();
@@ -90,7 +94,27 @@ public class ListCommand extends Command {
                     }
                 }
 
-                help.addField(serverManager.getMessage("list_message_name"), command.getTrigger(), true);
+                if(first) {
+                    first=false;
+                    names += command.getTrigger();
+                    descriptions = command.getDescription();
+                    if(command.hasValue()) {
+                        values += command.getValue();
+                    } else {
+                        values += "";
+                    }
+
+                } else {
+                    names += "\n" + command.getTrigger();
+                    descriptions += "\n" + command.getDescription();
+                    if(command.hasValue()) {
+                        values += "\n" + command.getValue();
+                    } else {
+                        values += "\n";
+                    }
+                }
+
+                /*help.addField(serverManager.getMessage("list_message_name"), command.getTrigger(), true);
                 if(command.hasValue()) {
                     help.addField(serverManager.getMessage("list_message_value"), command.getValue(), true);
                     help.addField(serverManager.getMessage("list_message_description"), command.getDescription(), true);
@@ -98,9 +122,13 @@ public class ListCommand extends Command {
                 if(!command.hasValue()) {
                     help.addField(serverManager.getMessage("list_message_description"), command.getDescription(), true);
                     help.addBlankField(true);
-                }
+                }*/
             }
         }
+
+        help.addField(serverManager.getMessage("list_message_name"), names, true);
+        help.addField(serverManager.getMessage("list_message_value"), values, true);
+        help.addField(serverManager.getMessage("list_message_description"), descriptions, true);
         help.setFooter(serverManager.getMessage("list_page") + "\n" + page + "/" + pageAmount + "\u200b \u200b \u200b \u200b \u200b | \u200b \u200b \u200b");
         help.setTimestamp(new Date().toInstant());
 

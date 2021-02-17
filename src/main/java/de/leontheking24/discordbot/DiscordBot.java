@@ -9,7 +9,6 @@ import de.leontheking24.discordbot.Logger.DefaultLogger;
 import de.leontheking24.discordbot.Logger.Logger;
 import de.leontheking24.discordbot.Moderation.Listener.*;
 import de.leontheking24.discordbot.Poll.PollEventListener;
-import de.leontheking24.discordbot.Utils.MemoryManager;
 import de.leontheking24.discordbot.Utils.Utils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -45,7 +44,6 @@ public class DiscordBot {
     private static Logger logger;
     private static ServerLists serverLists;
 
-    private static MemoryManager memoryManager;
     private static Utils utils;
     private static DatabaseGlobalConfig databaseGlobalConfig;
     private static LanguageManager languageManager;
@@ -56,8 +54,8 @@ public class DiscordBot {
     }
 
     public DiscordBot() throws LoginException, InterruptedException {
-        builder = JDABuilder.createDefault("NzUwMzcxOTMzMDMxMjM1NzQ2.X05kUg.RcH5hJiT7BaiJAk1eXy7akP276A");
-        //builder = JDABuilder.createDefault("NzY5OTY0ODkxMTQ2NDIwMjY2.X5Wrrw.UkiWTS0WTAQtoD9QKK1CuFcA07o");
+        builder = JDABuilder.createDefault("NzUwMzcxOTMzMDMxMjM1NzQ2.X05kUg.RcH5hJiT7BaiJAk1eXy7akP276A"); // Main Account
+        //builder = JDABuilder.createDefault("NzY5OTY0ODkxMTQ2NDIwMjY2.X5Wrrw.UkiWTS0WTAQtoD9QKK1CuFcA07o"); //Test Account
         builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
         jda = builder.build();
         logger = new DefaultLogger();
@@ -65,9 +63,7 @@ public class DiscordBot {
         languageManager = new LanguageManager();
         serverLists = new ServerLists();
         utils = new Utils();
-        memoryManager = new MemoryManager();
         initServer();
-        memoryManager.startMemoryScheduler();
     }
 
     public void initServer() throws InterruptedException {
@@ -118,10 +114,6 @@ public class DiscordBot {
 
     public static Logger getLogger() {
         return logger;
-    }
-
-    public static MemoryManager getMemoryManager() {
-        return memoryManager;
     }
 
     public static DatabaseGlobalConfig getDatabaseGlobalConfig() {
